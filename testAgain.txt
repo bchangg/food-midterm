@@ -1,2 +1,6 @@
 lfkdasjflkasjlfaj this is brian
+<<<<<<< HEAD
 tsdfsdggigiushv ibigbd
+=======
+this is brian again
+>>>>>>> 90695bb4e585349e19f6cfbc2f8e598eef066f97
