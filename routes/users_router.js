@@ -9,6 +9,9 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (db) => {
+  router.get('/', (request, response) => {
+
+  });
   router.get("/:id", (request, response) => {
     const userId = request.params.id;
     const queryConfig = {
@@ -26,17 +29,9 @@ module.exports = (db) => {
       .catch((error) => {
         reponse.redirect(`/`);
       });
-
-    // console.log(request.session.user);
-    // if (request.session.user) {
-    //   const user = request.params.id;
-    //   response.render("user", { user })
-    // } else {
-    //   response.redirect("/");
-    // }
   });
 
-  router.get("/all", (req, res) => {
+  router.get("/", (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
         const users = data.rows;

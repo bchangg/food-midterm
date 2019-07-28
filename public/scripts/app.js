@@ -7,4 +7,6 @@ $(() => {
       $("<div>").text(user.name).appendTo($("body"));
     }
   });;
+
+  $.('a.navbar-brand')
 });
