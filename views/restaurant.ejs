@@ -31,33 +31,57 @@
   <h1>RESTAURANT ORDERS PAGE</h1>
 
   <section class='container'>
+    <% for(let i = 0; i < orders.length; i++) { %>
+    <%= console.log(orders[i]) %>
+    <%= console.log(items) %>
     <article class='order'>
       <div class="card order-number">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Order #</li>
-          <li class="list-group-item">1</li>
+          <li class="list-group-item"><%= orders[i].order_id %></li>
         </ul>
       </div>
       <div class="card order-details">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Details</li>
-          <li class="list-group-item">xxxxxxxxxx</li>
+          <li class="list-group-item">
+            <ul class="list-group list-group-flush">
+              <% for(let z = 0; z < items.length; z++) { %>
+              <%if(items[z].order_id === orders[i].order_id){%>
+              <li class="list-group-item"><%= items[z].dish_name%></li>
+              <%}%>
+              <%}%>
+            </ul>
+          </li>
         </ul>
       </div>
       <div class="card order-status">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Status</li>
-          <li class="list-group-item">Pending</li>
+          <li class="list-group-item"><%= orders[i].order_status %>
+          </li>
         </ul>
       </div>
       <div class="card next-status">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Next Status</li>
-          <li class="list-group-item"><button type="button" class="btn btn-primary">Primary</button></li>
+          <% switch (orders[i].order_status) {
+            case 'Pending' : %>
+          <li class="list-group-item"><button type="button" class="btn btn-primary">Accept</button></li>
+          <% break;
+          case 'Preparing' : %>
+          <li class="list-group-item"><button type="button" class="btn btn-info">Ready</button></li>
+          <% break;
+            case 'Ready' : %>
+          <li class="list-group-item"><button type="button" class="btn btn-success">Completed</button></li>
+          <% break;
+            } %>
+
         </ul>
       </div>
     </article>
     <br>
+    <%}%>
   </section>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
