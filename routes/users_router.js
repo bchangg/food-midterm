@@ -9,26 +9,28 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (db) => {
+  // show the current status of user's order
   router.get("/:id", (request, response) => {
     const user = request.params.id;
-    response.render("user", { user })
-  });
-
-  router.get("/all", (req, res) => {
-    db.query(`SELECT * FROM users;`)
+    db.query(`SELECT * FROM orders WHERE user_id = ${user};`)
       .then(data => {
-        const users = data.rows;
-        res.json({ users });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        let orders = data.rows;
+        response.render("user", { user, orders })
       });
   });
-  router.get("/:id", (request, response) => {
-    // set new cookie for current id
-    response.render("user")
-  });
+
+  // router.get("/all", (req, res) => {
+  //   db.query(`SELECT * FROM users;`)
+  //     .then(data => {
+  //       const users = data.rows;
+  //       res.json({ users });
+  //     })
+  //     .catch(err => {
+  //       res
+  //         .status(500)
+  //         .json({ error: err.message });
+  //     });
+  // });
+
   return router;
 };

@@ -1,0 +1,26 @@
+
+.currentOrder .status {
+  border: 2px solid green;
+  border-radius: 20px;
+  width: 60%;
+  text-align: center;
+  margin: auto;
+  padding: 10px;
+  margin-bottom: 5px;
+
+    .user_status_text {
+      font-size: 20px;
+      color:rgb(0, 0, 0);
+      margin: 5px;
+      vertical-align: middle
+    }
+
+    .user_status_show {
+      border: 2px solid red;
+      border-radius: 10px;
+      vertical-align: middle;
+      margin: 5px;
+      padding: 3px
+    }
+}
+
