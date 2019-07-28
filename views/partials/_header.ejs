@@ -6,10 +6,24 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/users/:id">Bob</a>
-        <a class="nav-item nav-link" href="/users/:id">Alice</a>
-        <a class="nav-item nav-link" href="/users/:id">Frodo</a>
-        <a class="nav-item nav-link" href="/orders">Restaurant</a>
+        <% if (!user) { %>
+        <form class="nav-item nav-link" action="/login" method="post">
+          <button type="submit" name="user" value="2">Bob</button>
+        </form>
+        <form class="nav-item nav-link" action="/login" method="post">
+          <button type="submit" name="user" value="1">Alice</button>
+        </form>
+        <form class="nav-item nav-link" action="/login" method="post">
+          <button type="submit" name="user" value="3">Frodo</button>
+        </form>
+        <form class="nav-item nav-link" action="/login" method="post">
+          <button type="submit" name="user" value="4">Resto</button>
+        </form>
+        <% } else {%>
+        <form class="nav-item nav-link" action="/logout" method="post">
+          <button type="submit">Log Out</button>
+        </form>
+        <% } %>
       </div>
     </div>
   </nav>

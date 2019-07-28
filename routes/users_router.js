@@ -9,6 +9,11 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (db) => {
+  router.get("/:id", (request, response) => {
+    const user = request.params.id;
+    response.render("user", { user })
+  });
+
   router.get("/all", (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
@@ -22,6 +27,7 @@ module.exports = (db) => {
       });
   });
   router.get("/:id", (request, response) => {
+    // set new cookie for current id
     response.render("user")
   });
   return router;

@@ -2,13 +2,14 @@
 require('dotenv').config();
 
 // Web server config
-const PORT       = process.env.PORT || 8080;
-const ENV        = process.env.ENV || "development";
-const express    = require("express");
+const PORT = process.env.PORT || 8080;
+const ENV = process.env.ENV || "development";
+const express = require("express");
 const bodyParser = require("body-parser");
-const sass       = require("node-sass-middleware");
-const app        = express();
-const morgan     = require('morgan');
+const sass = require("node-sass-middleware");
+const app = express();
+const morgan = require('morgan');
+const cookieSession = require('cookie-session')
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -30,11 +31,15 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const usersRoutes = require("./routes/users");
-const restaurantsRoutes = require("./routes/restaurants");
+const usersRoutes = require("./routes/users_router");
+const restaurantsRoutes = require("./routes/restaurants_router");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -46,9 +51,35 @@ app.use("/restaurants", restaurantsRoutes(db));
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", (request, response) => {
+  if (!request.session.user_id) {
+    response.render("index", { user: false });
+  } else {
+    response.render("index", { user: true });
+  }
+
 });
+
+app.post("/login", (request, response) => {
+  const userId = request.body.user;
+  request.session.user_id = userId;
+  console.log(userId);
+  if (userId == 4) {
+    console.log("I HAVE REACHED RESTO endpoint");
+    response.redirect("/restaurants")
+  } else {
+    console.log("I HAVE REACHED USERS endpoint");
+    response.redirect(`/users/${userId}`)
+  }
+});
+
+app.post("/logout", (request, response) => {
+  request.session = null;
+  response.redirect("/");
+});
+
+// /logout
+// empty cookies and redirect to /
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
