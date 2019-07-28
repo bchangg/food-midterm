@@ -5,26 +5,28 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <% if (!user) { %>
-        <form class="nav-item nav-link" action="/login" method="post">
-          <button type="submit" name="user" value="2">Bob</button>
-        </form>
-        <form class="nav-item nav-link" action="/login" method="post">
-          <button type="submit" name="user" value="1">Alice</button>
-        </form>
-        <form class="nav-item nav-link" action="/login" method="post">
-          <button type="submit" name="user" value="3">Frodo</button>
-        </form>
-        <form class="nav-item nav-link" action="/login" method="post">
-          <button type="submit" name="user" value="4">Resto</button>
-        </form>
-        <% } else {%>
-        <form class="nav-item nav-link" action="/logout" method="post">
-          <button type="submit">Log Out</button>
-        </form>
-        <% } %>
-      </div>
+      <% if (!user) { %>
+      <form class="form-inline" action="/login" method="post">
+        <div class="btn-group" role="group" aria-label="Users's drop down selection">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Select User
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+              <input class="dropdown-item" type="submit" name="user" value="Bob">
+              <input class="dropdown-item" type="submit" name="user" value="Alice">
+              <input class="dropdown-item" type="submit" name="user" value="Frodo">
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit" name="user" value="Restaurant">Restaurant</button>
+        </div>
+      </form>
+      <% } else {%>
+      <p>Signed In as <%= user %></p>
+      <form class="form-inline" action="/logout" method="post">
+        <button class="btn btn-primary" type="submit">Log Out</button>
+      </form>
+      <% } %>
     </div>
   </nav>
 </header>

@@ -10,8 +10,30 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.get("/:id", (request, response) => {
-    const user = request.params.id;
-    response.render("user", { user })
+    const userId = request.params.id;
+    const queryConfig = {
+      text: `SELECT name FROM users WHERE id = $1`,
+      values: [userId]
+    }
+
+    db.query(queryConfig)
+      .then((queryResponse) => {
+        console.log(queryResponse.rows);
+        const userName = queryResponse.rows[0].name;
+        console.log(userName);
+        response.render('user', { user: userName })
+      })
+      .catch((error) => {
+        reponse.redirect(`/`);
+      });
+
+    // console.log(request.session.user);
+    // if (request.session.user) {
+    //   const user = request.params.id;
+    //   response.render("user", { user })
+    // } else {
+    //   response.redirect("/");
+    // }
   });
 
   router.get("/all", (req, res) => {
@@ -25,10 +47,6 @@ module.exports = (db) => {
           .status(500)
           .json({ error: err.message });
       });
-  });
-  router.get("/:id", (request, response) => {
-    // set new cookie for current id
-    response.render("user")
   });
   return router;
 };
