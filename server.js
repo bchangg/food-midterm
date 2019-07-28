@@ -9,8 +9,9 @@ const bodyParser = require("body-parser");
 const sass = require("node-sass-middleware");
 const app = express();
 const morgan = require('morgan');
-const usersRoutes = require("./routes/users");
-const restaurantsRoutes = require("./routes/restaurants");
+const usersRoutes = require("./routes/users_router");
+const restaurantsRoutes = require("./routes/restaurants_router");
+const cookieSession = require("cookie-session");
 
 
 // PG database client/connection setup
