@@ -26,27 +26,29 @@
           <span class="user_status_show"><%=order.order_status %></span>
       </div>
     <% } %>
+  </div>  <br>
 
-    - should be at the mid of the page <br>
-    - read data from database : <br>
-    SELECT order_status FROM orders <br>
-    WHERE user_id = <%=user%> <br>
-    AND order_status = "PENDING" OR order_status = "ACCEPTED" <br>
-    OR order_status = "READY" OR order_status = "CANCELLED"<br>
-
-  </div>  <br><br><br>
-
-  <div class="currentOrderDetail">current order status
-    <block>
-      #that we need to render the current status <br>
-      Database load from here <br>
-      column 1 - name of food; <br>
-      column 2 - food url pages; <br>
-      column 3 - food description; <br>
-      column 4 - quantity; <br>
-      column 4 - food price; <br>
-    </block>
-
+  <div class="currentOrderDetail">Current Order Detail
+    <table class="orderDetail">
+      <thead>
+        <th scope="col">Name</th>
+        <th scope="col">Pics</th>
+        <th scope="col">Description</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total Price</th>
+      </thead>
+      <tbody>
+          <% for (let order of orders) { %>
+            <tr>
+              <td><%=order.name %></td>
+              <td><img src=<%=order.imgurl %>></td>
+              <td><%=order.description %></td>
+              <td><%=order.quantity %></td>
+              <td><%=order.quantity * order.price%></td>
+            </tr>
+          <% } %>
+      </tbody>
+    </table>
   </div>
 
 

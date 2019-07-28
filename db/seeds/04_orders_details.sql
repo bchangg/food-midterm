@@ -12,3 +12,5 @@ INSERT INTO orders_details (quantity, order_price, order_duration, order_id, dis
 VALUES (1, 800, 60, 3, 4);
 INSERT INTO orders_details (quantity, order_price, order_duration, order_id, dish_id)
 VALUES (1, 500, 900, 3, 5);
+INSERT INTO orders_details (quantity, order_price, order_duration, order_id, dish_id)
+VALUES (1, 500, 900, 4, 5);

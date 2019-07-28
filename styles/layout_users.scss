@@ -24,3 +24,12 @@
     }
 }
 
+.currentOrderDetail .orderDetail {
+  box-sizing: border-box;
+  width: 80%;
+  max-width: 100%;
+  border-collapse: collapse;
+  border: solid #e0e0dc;
+  border-width: 1px 0 0 1px;
+}
+

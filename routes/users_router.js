@@ -12,9 +12,15 @@ module.exports = (db) => {
   // show the current status of user's order
   router.get("/:id", (request, response) => {
     const user = request.params.id;
-    db.query(`SELECT * FROM orders WHERE user_id = ${user};`)
+    db.query(`
+      SELECT * FROM orders
+      JOIN orders_details ON orders.id = order_id
+      JOIN dishes ON dishes.id = dish_id
+      WHERE user_id = ${user};
+    `)
       .then(data => {
         let orders = data.rows;
+        console.log(orders)
         response.render("user", { user, orders })
       });
   });
