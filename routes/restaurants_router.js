@@ -6,7 +6,6 @@ const { getPendingAndInProgressOrders, getItemsPerOrder } = require('../query/re
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-<<<<<<< HEAD
     // render order status
     console.log("I HAVE REACHED RESTO page");
 
@@ -21,9 +20,6 @@ module.exports = (db) => {
         res.status(500)
           .json({ error: err.message });
       });
-=======
-    res.render("restaurant", { user: true });
->>>>>>> brian
   });
 
   router.post("/", (request, response) => {

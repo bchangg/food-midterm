@@ -20,6 +20,7 @@
   <% include partials/_header %>
   <h1>USER ORDER STATUS PAGE</h1>
   <div class="currentOrder">
+    <% console.log(status) %>
     <% for (let i of status) { %>
       <div class=status>
           <span class="user_status_text">Order#:<%=i.id %> Status:</span>
