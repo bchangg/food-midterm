@@ -1,22 +1,49 @@
 const express = require('express');
 const router = express.Router();
+const { getPendingAndInProgressOrders, getItemsPerOrder } = require('../query/restaurantQueries');
+
+
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
     // render order status
     console.log("I HAVE REACHED RESTO page");
 
-    res.render("restaurant", { user: true });
-    // db.query(`SELECT * FROM orders;`)
-    //   .then(data => {
-    //     const orders = data.rows;
-    //     res.json({ orders });
-    //   })
-    //   .catch(err => {
-    //     res
-    //       .status(500)
-    //       .json({ error: err.message });
-    //   });
+    getPendingAndInProgressOrders(db)
+      .then((orders) => {
+        getItemsPerOrder(db).then(items => {
+          res.render("restaurant", { user: true, orders, items });
+        })
+      })
+      .catch(err => {
+        console.log('error:', err);
+        res.status(500)
+          .json({ error: err.message });
+      });
   });
+
+  router.post("/", (request, response) => {
+    const newStatus = request.body.order_status;
+    const orderId = request.body.order_id;
+
+    const updateOrderStatus = `
+    UPDATE orders
+    SET order_status = '${newStatus}'
+    WHERE id = ${orderId}
+    RETURNING *;
+    `
+
+    db.query(updateOrderStatus)
+      .then(data => {
+        console.log(data.body);
+        response.redirect("/restaurants")
+      })
+      .catch(err => {
+        console.log('error:', err);
+        response.status(500)
+          .json({ error: err.message });
+      });
+  });
+
   return router;
 };

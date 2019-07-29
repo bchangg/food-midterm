@@ -1,0 +1,51 @@
+
+.currentOrder .status {
+  border: 2px solid green;
+  border-radius: 20px;
+  width: 60%;
+  text-align: center;
+  margin: auto;
+  padding: 10px;
+  margin-bottom: 5px;
+
+    .user_status_text {
+      font-size: 20px;
+      color:rgb(0, 0, 0);
+      margin: 5px;
+      vertical-align: middle
+    }
+
+    .user_status_show {
+      border: 2px solid rgb(251, 255, 0);
+      border-radius: 10px;
+      vertical-align: middle;
+      margin: 5px;
+      padding: 3px
+    }
+
+    button {
+      margin-left: 10px
+    }
+}
+
+.currentOrderDetail {
+  margin: 1em;
+
+  .orderDetail {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    border: solid #000000;
+    border-width: 1px 1 1 1px;
+
+    .s {
+      width: 15%
+    }
+
+    .m {
+      width: 40%
+    }
+  }
+}
+
