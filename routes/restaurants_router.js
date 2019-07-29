@@ -11,9 +11,10 @@ module.exports = (db) => {
 
     getPendingAndInProgressOrders(db)
       .then((orders) => {
-        getItemsPerOrder(db).then(items => {
-          res.render("restaurant", { user: true, orders, items });
-        })
+        getItemsPerOrder(db)
+          .then(items => {
+            res.render("restaurant", { user: true, orders, items });
+          })
       })
       .catch(err => {
         console.log('error:', err);
