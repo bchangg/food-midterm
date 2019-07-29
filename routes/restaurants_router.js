@@ -41,5 +41,29 @@ module.exports = (db) => {
         //   .json({ error: err.message });
       });
   });
+
+  router.post("/", (request, response) => {
+    const newStatus = request.body.order_status;
+    const orderId = request.body.order_id;
+
+    const updateOrderStatus = `
+    UPDATE orders
+    SET order_status = '${newStatus}'
+    WHERE id = ${orderId}
+    RETURNING *;
+    `
+
+    db.query(updateOrderStatus)
+      .then(data => {
+        console.log(data.body);
+        response.redirect("/restaurants")
+      })
+      .catch(err => {
+        console.log('error:', err);
+        response.status(500)
+          .json({ error: err.message });
+      });
+  });
+
   return router;
 };

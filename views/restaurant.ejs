@@ -32,8 +32,6 @@
 
   <section class='container'>
     <% for(let i = 0; i < orders.length; i++) { %>
-    <%= console.log(orders[i]) %>
-    <%= console.log(items) %>
     <article class='order'>
       <div class="card order-number">
         <ul class="list-group list-group-flush">
@@ -67,13 +65,27 @@
           <li class="list-group-item">Next Status</li>
           <% switch (orders[i].order_status) {
             case 'Pending' : %>
-          <li class="list-group-item"><button type="button" class="btn btn-primary">Accept</button></li>
+          <li class="list-group-item">
+            <form action="/restaurants" method="POST">
+              <input type=hidden name=order_status value="Preparing">
+              <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
+              <button type="submit" class="btn btn-info">Accept</button>
+            </form>
+          </li>
           <% break;
           case 'Preparing' : %>
-          <li class="list-group-item"><button type="button" class="btn btn-info">Ready</button></li>
+          <form action="/restaurants" method="POST">
+            <input type=hidden name=order_status value="Ready">
+            <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
+            <button type="submit" class="btn btn-primary">Ready</button>
+          </form>
           <% break;
             case 'Ready' : %>
-          <li class="list-group-item"><button type="button" class="btn btn-success">Completed</button></li>
+          <form action="/restaurants" method="POST">
+            <input type=hidden name=order_status value="Complete">
+            <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
+            <button type="submit" class="btn btn-success">Complete</button>
+          </form>
           <% break;
             } %>
 
