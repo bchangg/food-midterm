@@ -80,9 +80,16 @@
             <button type="submit" class="btn btn-primary">Ready</button>
           </form>
           <% break;
-              case 'Ready' : %>
+          case 'Ready' : %>
           <form action="/restaurants" method="POST">
             <input type=hidden name=order_status value="Complete">
+            <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
+            <button type="submit" class="btn btn-success">Complete</button>
+          </form>
+          <% break;
+          case 'Cancelled' : %>
+          <form action="/restaurants" method="POST">
+            <input type=hidden name=order_status value="CANCELATTION_COMPLETE">
             <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
             <button type="submit" class="btn btn-success">Complete</button>
           </form>
