@@ -25,7 +25,11 @@
           <span class="user_status_text">Order#:<%=i.id %> Status:</span>
           <span class="user_status_show"><%=i.order_status %></span>
           <% if (i.order_status == "Pending") { %>
-            <button type="button" class="btn btn-danger">Cancel</button>
+            <form action="/users" method="POST" style="display: inline;">
+              <input type=hidden name=user_id value="<%= i.user_id %>">
+              <input type=hidden name=order_id value="<%= i.id %>">
+              <button type="submit" class="btn btn-danger">Cancel</button>
+            </form>
           <% } %>
       </div>
     <% } %>

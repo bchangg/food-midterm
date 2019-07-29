@@ -32,18 +32,26 @@ module.exports = (db) => {
       });
   });
 
-  // router.get("/all", (req, res) => {
-  //   db.query(`SELECT * FROM users;`)
-  //     .then(data => {
-  //       const users = data.rows;
-  //       res.json({ users });
-  //     })
-  //     .catch(err => {
-  //       res
-  //         .status(500)
-  //         .json({ error: err.message });
-  //     });
-  // });
+  // the post request will change the order_status to 'Cancelled' in the database
+  router.post("/", (request, response) => {
+    const orderId = request.body.order_id;
+    const cancelOrder = `
+    UPDATE orders
+    SET order_status = 'Cancelled'
+    WHERE id = ${orderId}
+    RETURNING *;
+    `
+    const user = request.body.user_id;
+    db.query(cancelOrder)
+      .then(data => {
+        response.redirect(`/users/${user}`)
+      })
+      .catch(err => {
+        console.log('error:', err);
+        response.status(500)
+          .json({ error: err.message });
+      });
+    });
 
   return router;
 };
