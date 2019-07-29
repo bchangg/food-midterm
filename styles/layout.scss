@@ -2,8 +2,12 @@
 
 body {
   background-color: #EEE;
-
-  h1 {
-    color: #244751;
+  main {
+    background: #ada717;
+    .jumbotron {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      background-color: #FFF;
+    }
   }
 }

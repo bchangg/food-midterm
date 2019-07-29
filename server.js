@@ -58,7 +58,6 @@ app.get("/", (request, response) => {
   } else {
     response.render("index", { user: true });
   }
-
 });
 
 app.post("/login", (request, response) => {
