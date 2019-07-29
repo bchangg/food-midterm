@@ -20,18 +20,19 @@
   <% include partials/_header %>
   <h1>USER ORDER STATUS PAGE</h1>
   <div class="currentOrder">
-    <% for (let order of status) { %>
+    <% for (let i of status) { %>
       <div class=status>
-          <span class="user_status_text">Your Order Status:</span>
-          <span class="user_status_show"><%=order.order_status %></span>
-          <% if (order.order_status == "Pending") { %>
+          <span class="user_status_text">Order#:<%=i.id %> Status:</span>
+          <span class="user_status_show"><%=i.order_status %></span>
+          <% if (i.order_status == "Pending") { %>
             <button type="button" class="btn btn-danger">Cancel</button>
           <% } %>
       </div>
     <% } %>
   </div>  <br>
 
-  <div class="currentOrderDetail">Current Order Detail
+  <% for (let i of status) { %>
+  <div class="currentOrderDetail">Current Order Detail (Order#:<%=i.id %>)
     <table class="orderDetail">
       <thead>
         <th scope="col">Name</th>
@@ -42,17 +43,20 @@
       </thead>
       <tbody>
           <% for (let order of orders) { %>
-            <tr>
-              <td><%=order.name %></td>
-              <td><img src=<%=order.imgurl %>></td>
-              <td><%=order.description %></td>
-              <td><%=order.quantity %></td>
-              <td><%=order.quantity * order.price%></td>
-            </tr>
+            <% if (order.order_id === i.id) { %>
+              <tr>
+                <td class='s'><%=order.name %></td>
+                <td class='s'><img src=<%=order.imgurl %> height='100px'></td>
+                <td class='m'><%=order.description %></td>
+                <td class='s'><%=order.quantity %></td>
+                <td class='s'><%=order.quantity * order.price%></td>
+              </tr>
+            <% } %>
           <% } %>
       </tbody>
     </table>
   </div>
+  <% } %>
 
 
 </body>

@@ -21,7 +21,7 @@ module.exports = (db) => {
       .then(orderData => {
         let orders = orderData.rows;
         db.query(`
-        SELECT order_status, user_id
+        SELECT id, order_status, user_id
         FROM orders
         WHERE user_id = ${user};
         `)
