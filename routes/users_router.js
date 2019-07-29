@@ -9,6 +9,7 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (db) => {
+<<<<<<< HEAD
   // show the current status of user's order
   router.get("/:id", (request, response) => {
     const user = request.params.id;
@@ -45,5 +46,41 @@ module.exports = (db) => {
   //     });
   // });
 
+=======
+  router.get('/', (request, response) => {
+
+  });
+  router.get("/:id", (request, response) => {
+    const userId = request.params.id;
+    const queryConfig = {
+      text: `SELECT name FROM users WHERE id = $1`,
+      values: [userId]
+    }
+
+    db.query(queryConfig)
+      .then((queryResponse) => {
+        console.log(queryResponse.rows);
+        const userName = queryResponse.rows[0].name;
+        console.log(userName);
+        response.render('user', { user: userName })
+      })
+      .catch((error) => {
+        reponse.redirect(`/`);
+      });
+  });
+
+  router.get("/", (req, res) => {
+    db.query(`SELECT * FROM users;`)
+      .then(data => {
+        const users = data.rows;
+        res.json({ users });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+>>>>>>> brian
   return router;
 };

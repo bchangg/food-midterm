@@ -53,25 +53,52 @@ app.use("/restaurants", restaurantsRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (request, response) => {
-  if (!request.session.user_id) {
-    response.render("index", { user: false });
-  } else {
-    response.render("index", { user: true });
+  const userId = request.session.user;
+  const queryConfig = {
+    text: `
+    SELECT name FROM users WHERE id = $1
+    `,
+    values: [userId]
   }
-
+  db.query(queryConfig)
+    .then((queryResponse) => {
+      console.log(queryResponse);
+      console.log(queryResponse.rows[0].name);
+      const userName = queryResponse.rows[0].name;
+      if (!userName) {
+        response.render("index", { user: false });
+      } else {
+        response.render("index", { user: userName });
+      }
+    })
+    .catch((error) => {
+      response.render('index', { user: false })
+    });
 });
 
 app.post("/login", (request, response) => {
-  const userId = request.body.user;
-  request.session.user_id = userId;
-  console.log(userId);
-  if (userId == 4) {
-    console.log("I HAVE REACHED RESTO endpoint");
-    response.redirect("/restaurants")
-  } else {
-    console.log("I HAVE REACHED USERS endpoint");
-    response.redirect(`/users/${userId}`)
+  const userName = request.body.user;
+  const queryConfig = {
+    text: `
+    SELECT id AS user_id FROM users WHERE name = $1
+    `,
+    values: [userName]
   }
+  db.query(queryConfig)
+    .then((queryResponse) => {
+      const userId = queryResponse.rows[0].user_id;
+      request.session.user = userId; // set unique cookie for each user using
+      // their id so that two users with the same name don't get the same cookie
+      if (Number(userId) !== 4) {
+        response.redirect(`/users/${userId}`)
+      } else {
+        response.redirect(`/restaurants`)
+      }
+    })
+    .catch((error) => {
+      response.redirect(`/`);
+    })
+
 });
 
 app.post("/logout", (request, response) => {

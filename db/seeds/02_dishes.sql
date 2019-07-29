@@ -1,4 +1,4 @@
--- time is stored in seconds
+-- duration is stored in seconds
 
 INSERT INTO dishes (name, description, price, imgUrl, duration)
 VALUES ('Hamburger', 'Tasty hamburger', 300,
