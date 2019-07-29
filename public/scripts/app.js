@@ -11,7 +11,7 @@ $(() => {
           <div class="">some quantity counter</div>
           <div class="d-flex flex-column justify-content-start align-items-center">
             <label for="select">$${dishPrice}</label>
-            <input class="btn btn-primary btn-sm" type="button" name="select" value="Select">
+            <input class="select-dish btn btn-primary btn-sm" type="button" name="select" value="Select">
           </div>
         </div>
       </article>
@@ -20,18 +20,31 @@ $(() => {
   };
   const renderDishes = function(allDishes) {
     allDishes.forEach((dishEntry) => {
-      const dish = createDishElement(dishEntry);
-      $('#menu').append(dish);
+      $('#menu').append(createDishElement(dishEntry));
     });
   };
+
+  const addPriceToTotal = function() {
+    $selectDish = $('.select-dish');
+    $orderPrice = $('#order-price');
+    $currentTotal = Number($orderPrice.text().slice(1));
+    $selectDish.click(function(event) {
+      $currentTotal += Number($(this).parent().children('label').text().slice(1));
+      $orderPrice.text(`$${$currentTotal}`);
+    });
+  }
+
+  const setPageInteractions = function() {
+    addPriceToTotal();
+  }
 
   const loadDishes = function() {
     $.get("/dishes/")
       .then((data) => {
-        console.log(data);
-        console.log(data[0].description.charAt(0).toUpperCase() + data[0].description.slice(1));
         renderDishes(data)
+        setPageInteractions();
       });
   }
   loadDishes();
+
 });
