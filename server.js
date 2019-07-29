@@ -9,8 +9,6 @@ const bodyParser = require("body-parser");
 const sass = require("node-sass-middleware");
 const app = express();
 const morgan = require('morgan');
-const usersRoutes = require("./routes/users_router");
-const restaurantsRoutes = require("./routes/restaurants_router");
 const cookieSession = require("cookie-session");
 
 
@@ -41,11 +39,15 @@ app.use(cookieSession({
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
+const usersRoutes = require("./routes/users_router");
+const restaurantsRoutes = require("./routes/restaurants_router");
+const dishesRoutes = require("./routes/dishes_router");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/users", usersRoutes(db));
 app.use("/restaurants", restaurantsRoutes(db));
+app.use("/dishes", dishesRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 

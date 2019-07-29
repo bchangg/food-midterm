@@ -14,11 +14,12 @@
 
 <body>
   <% include partials/_header %>
-  <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center pl-5">
+  <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center pl-5 my-0">
     <h1>LightResto</h1>
   </div>
-  <main class="py-0" style="width: 80vw; margin: auto">
+  <main class="d-flex flex-row">
     <% include partials/_menu %>
+    <% include partials/_orderSlider %>
   </main>
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>

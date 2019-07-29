@@ -6,12 +6,14 @@
     border: 1px solid black;
     padding: 1rem;
 
+    p {
+      margin-left: 2rem;
+    }
+
     .quantity-and-price {
-      margin-left: 6rem;
-      margin-right: 6rem;
+      margin: auto 6rem;
       @media all and (max-width: 1024px) {
-        margin-left: 0;
-        margin-right: 0;
+        margin: auto 0;
       }
     }
   }
