@@ -1,9 +1,0 @@
- id | quantity | order_price | order_duration | order_id | dish_id | id |   created_at    | order_status | user_id | id | name  |   phone    |     email      | id |     name     |              description               | price |                imgurl                 | duration 
-----+----------+-------------+----------------+----------+---------+----+-----------------+--------------+---------+----+-------+------------+----------------+----+--------------+----------------------------------------+-------+---------------------------------------+----------
-  1 |        1 |         300 |            180 |        1 |       1 |  1 | 19:51:17.511924 | Pending      |       1 |  1 | Alice | 1029384756 | alice@test.com |  1 | Hamburger    | Tasty hamburger                        |   300 | ../../public/images/hamburger.jpeg    |      180
-  2 |        1 |         450 |            210 |        1 |       2 |  1 | 19:51:17.511924 | Pending      |       1 |  1 | Alice | 1029384756 | alice@test.com |  2 | Cheeseburger | Tasty hamburger with cheese            |   450 | ../../public/images/cheeseburger.jpeg |      210
-  3 |        1 |         300 |            180 |        2 |       1 |  2 | 19:51:17.511924 | Pending      |       2 |  2 | Bob   | 3847302927 | bob@test.com   |  1 | Hamburger    | Tasty hamburger                        |   300 | ../../public/images/hamburger.jpeg    |      180
-  4 |        1 |         800 |             60 |        2 |       4 |  2 | 19:51:17.511924 | Pending      |       2 |  2 | Bob   | 3847302927 | bob@test.com   |  4 | Sake         | Some alcohol should be fine right? lol |   800 | ../../public/images/hamburger.jpeg    |       60
-  5 |        1 |         450 |            210 |        2 |       2 |  2 | 19:51:17.511924 | Pending      |       2 |  2 | Bob   | 3847302927 | bob@test.com   |  2 | Cheeseburger | Tasty hamburger with cheese            |   450 | ../../public/images/cheeseburger.jpeg |      210
-(5 rows)
-

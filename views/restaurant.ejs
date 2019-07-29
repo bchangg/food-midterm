@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-  <title>Home Page</title>
-
+  <title>Restaurant Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
@@ -24,40 +24,47 @@
   <h1>RESTAURANT ORDERS PAGE</h1>
 
   <section class='container'>
-    <% for(let i = 0; i < orders.length; i++) { %>
-    <article class='order'>
-      <div class="card order-number">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Order #</li>
-          <li class="list-group-item"><%= orders[i].order_id %></li>
-        </ul>
-      </div>
-      <div class="card order-details">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Details</li>
-          <li class="list-group-item">
-            <ul class="list-group list-group-flush">
-              <% for(let z = 0; z < items.length; z++) { %>
-              <%if(items[z].order_id === orders[i].order_id){%>
-              <li class="list-group-item"><%= items[z].dish_name%></li>
+
+    <table class='order'>
+      <thead>
+        <th scope="col">Order</th>
+        <th scope="col">Details</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Status</th>
+        <th scope="col">Next Status</th>
+      </thead>
+      <% for(let i = 0; i < orders.length; i++) { %>
+      <tbody>
+
+        <!-- ORDER -->
+        <td class='s'><%= orders[i].order_id %></td>
+
+        <!-- DISHES -->
+        <td class='m'>
+          <% for(let z = 0; z < items.length; z++) { %>
+          <%if(items[z].order_id === orders[i].order_id){%>
+          <li class="list-group-item"><%= items[z].dish_name%></li>
+          <%}%>
               <%}%>
+        </td>
+
+        <!-- QUANTITY -->
+        <td class='s'>
+          <% for(let z = 0; z < items.length; z++) { %>
+          <%if(items[z].order_id === orders[i].order_id){%>
+
+          <li class="list-group-item"><%= items[z].quantity%></li>
+          <%}%>
               <%}%>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <div class="card order-status">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Status</li>
-          <li class="list-group-item"><%= orders[i].order_status %>
-          </li>
-        </ul>
-      </div>
-      <div class="card next-status">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Next Status</li>
+        </td>
+
+        <!-- STATUS -->
+        <td class='s'><%= orders[i].order_status %></td>
+
+        <!-- BUTTON -->
+        <td class='s'>
           <% switch (orders[i].order_status) {
-            case 'Pending' : %>
+              case 'Pending' : %>
           <li class="list-group-item">
             <form action="/restaurants" method="POST">
               <input type=hidden name=order_status value="Preparing">
@@ -66,34 +73,30 @@
             </form>
           </li>
           <% break;
-          case 'Preparing' : %>
+            case 'Preparing' : %>
           <form action="/restaurants" method="POST">
             <input type=hidden name=order_status value="Ready">
             <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
             <button type="submit" class="btn btn-primary">Ready</button>
           </form>
           <% break;
-            case 'Ready' : %>
+              case 'Ready' : %>
           <form action="/restaurants" method="POST">
             <input type=hidden name=order_status value="Complete">
             <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
             <button type="submit" class="btn btn-success">Complete</button>
           </form>
           <% break;
-            } %>
-
-        </ul>
-      </div>
-    </article>
-    <br>
-    <%}%>
+              } %>
+        </td>
+      </tbody>
+      <%}%>
+    </table>
   </section>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/scripts/app.js"></script>
 
 </html>

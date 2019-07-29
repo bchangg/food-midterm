@@ -1,0 +1,20 @@
+#menu {
+  width: 50vw;
+  background-color: #fff;
+
+  article {
+    border: 1px solid black;
+    padding: 1rem;
+
+    p {
+      margin-left: 2rem;
+    }
+
+    .quantity-and-price {
+      margin: auto 6rem;
+      @media all and (max-width: 1024px) {
+        margin: auto 0;
+      }
+    }
+  }
+}

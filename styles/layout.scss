@@ -1,9 +1,28 @@
 // See: https://sass-lang.com/
 
 body {
-  background-color: #EEE;
+  background-color: #9ca19c;
 
-  h1 {
-    color: #244751;
+  .jumbotron {
+    background-image: url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 30rem;
+
+    h1 {
+      color: white;
+      font-size: 10rem;
+      width: 30vw;
+    }
+  }
+
+  main {
+    background: #6d86e0;
+    width: 70vw;
+    margin: auto;
+    padding: 0 auto;
+    @import 'menu';
+    @import 'orderSlider';
   }
 }
