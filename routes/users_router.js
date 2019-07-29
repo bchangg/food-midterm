@@ -18,10 +18,17 @@ module.exports = (db) => {
       JOIN dishes ON dishes.id = dish_id
       WHERE user_id = ${user};
     `)
-      .then(data => {
-        let orders = data.rows;
-        console.log(orders)
-        response.render("user", { user, orders })
+      .then(orderData => {
+        let orders = orderData.rows;
+        db.query(`
+        SELECT order_status, user_id
+        FROM orders
+        WHERE user_id = ${user};
+        `)
+        .then(orderStatusData => {
+          let status = orderStatusData.rows;
+          response.render("user", { user, orders, status })
+        })
       });
   });
 

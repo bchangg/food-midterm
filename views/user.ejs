@@ -20,10 +20,13 @@
   <% include partials/_header %>
   <h1>USER ORDER STATUS PAGE</h1>
   <div class="currentOrder">
-    <% for (let order of orders) { %>
+    <% for (let order of status) { %>
       <div class=status>
           <span class="user_status_text">Your Order Status:</span>
           <span class="user_status_show"><%=order.order_status %></span>
+          <% if (order.order_status == "Pending") { %>
+            <button type="button" class="btn btn-danger">Cancel</button>
+          <% } %>
       </div>
     <% } %>
   </div>  <br>

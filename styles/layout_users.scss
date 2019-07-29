@@ -16,11 +16,15 @@
     }
 
     .user_status_show {
-      border: 2px solid red;
+      border: 2px solid rgb(251, 255, 0);
       border-radius: 10px;
       vertical-align: middle;
       margin: 5px;
       padding: 3px
+    }
+
+    button {
+      margin-left: 10px
     }
 }
 
