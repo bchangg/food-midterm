@@ -1,6 +1,3 @@
 $(() => {
-  $('.container.menu').click(function() {
-    console.log('clicked');
-  });
-
+  const temp;
 });
