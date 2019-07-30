@@ -3,14 +3,13 @@ $(() => {
   let currentOrder = {};
 
   const createOrderDetailsElement = function(dish) {
-    console.log(dish);
     return `
       <div class="dish d-flex flex-row justify-content-between align-items-center">
         <div class="details d-flex flex-column align-items-center">
           <span>${dish.name}</span>
         </div>
         <div class="details d-flex flex-column align-items-center">
-          <span>x${dish.quantity}</span>
+          <input type="number" value="${dish.quantity}" min="0" max="100" step="1"/>
           <span>$${dish.price/100}</span>
         </div>
       </div>
@@ -61,10 +60,9 @@ $(() => {
     allDishes.forEach((dishEntry) => {
       $('#menu').append(createDishElement(dishEntry));
     });
-    $("input[type='number']").inputSpinner();
   };
 
-  const renderTotalPrice = function() {
+  const renderOrderSlider = function() {
     let $orderTotal = $('#order-total');
     let $selectDishButton = $('.select-dish');
     $selectDishButton.click(function(event) {
@@ -86,6 +84,7 @@ $(() => {
       $orderPriceSummary.before(createOrderDetailsElement(currentOrder[dishSelection]));
     }
     $('#final-price').text($('#order-total').text());
+    $("input[type='number']").inputSpinner();
   }
 
   const orderDetailsToggler = function() {
@@ -105,10 +104,15 @@ $(() => {
       .then((data) => {
         allDishes = data;
         renderDishes(data)
-        renderTotalPrice();
-        orderDetailsToggler();
+        $("input[type='number']").inputSpinner(); // setting plugin for the quantity input thing
       });
   }
 
-  loadDishes();
+  const loadPage = function() {
+    loadDishes();
+    renderOrderSlider();
+    orderDetailsToggler();
+  }
+
+  loadPage();
 });
