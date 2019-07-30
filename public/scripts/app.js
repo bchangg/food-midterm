@@ -28,14 +28,19 @@ $(() => {
   // it works by grabbing the price from the parent element directly
   // if someone was to go into the developer tools and change the prices
   // and then click order, they will be able to get everything for free (theoretically)
-  const addPriceToTotal = function() {
-    // NOTE: ADD QUERY SHIT TO HERE BEFORE YOU SUBMIT THIS
+  const addOrderToTotal = function() {
+    let $orderTotal = $('#order-total');
     let $selectDish = $('.select-dish');
-    let $orderPrice = $('#order-price');
-    let $currentTotal = Number($orderPrice.text().slice(1));
+    let $currentTotal = Number($orderTotal.text().slice(1));
     $selectDish.click(function(event) {
-      $currentTotal += Number($(this).parent().children('label').text().slice(1));
-      $orderPrice.text(`$${$currentTotal}`);
+      for (let dish in allDishes) {
+        const itemName = $(this).parent().parent().parent().children('h2').text();
+        if (allDishes[dish].name === itemName) {
+          $currentTotal += Number(allDishes[dish].price / 100);
+          break;
+        }
+      }
+      $orderTotal.text(`$${$currentTotal}`);
     });
   }
 
@@ -50,19 +55,21 @@ $(() => {
     });
   }
 
-
   const setPageInteractions = function() {
-    addPriceToTotal();
+    addOrderToTotal();
     showOrderDetails();
   }
 
+  let allDishes;
   const loadDishes = function() {
     $.get("/dishes/")
       .then((data) => {
+        allDishes = data;
         renderDishes(data)
         setPageInteractions();
       });
   }
+
   loadDishes();
 
 });
