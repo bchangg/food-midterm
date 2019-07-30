@@ -1,6 +1,3 @@
-
-
-
 const getPendingAndInProgressOrdersQuery = `
 select orders.id AS order_id, orders.order_status, users.phone, users.name from orders
 RIGHT JOIN users ON orders.user_id = users.id
@@ -21,6 +18,13 @@ JOIN dishes ON orders_details.dish_id = dishes.id
 GROUP BY orders_details.order_id, dishes.name, orders_details.quantity
 ORDER BY orders_details.order_id;`;
 
+const updateOrderStatusQuery =
+  `UPDATE orders
+  SET order_status =  $1
+  WHERE id = $2
+  RETURNING *;`;
+
+
 function getPendingAndInProgressOrders(db) {
   return db.query(getPendingAndInProgressOrdersQuery).then(ordersFromQuery => {
     return ordersFromQuery.rows;
@@ -33,8 +37,15 @@ function getItemsPerOrder(db) {
   })
 }
 
+function updateOrderStatus(db, request) {
+  const newStatus = request.body.order_status;
+  const orderId = request.body.order_id;
+  return db.query(updateOrderStatusQuery, [newStatus, orderId])
+}
+
 module.exports = {
   getPendingAndInProgressOrders,
-  getItemsPerOrder
+  getItemsPerOrder,
+  updateOrderStatus
 }
 
