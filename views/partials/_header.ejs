@@ -24,9 +24,11 @@
         </form>
         <% } else {%>
         <span>Signed In as <%= user %></span>
+        <% if (user !== 'Restaurant') {%>
         <form class="form-inline" action="/users" method="post">
           <button class="btn btn-primary" name="currentUsername" value="<%= user %>" type="submit">Order Status</button>
         </form>
+        <% } %>
         <form class="form-inline" action="/logout" method="post">
           <button class="btn btn-primary" type="submit">Log Out</button>
         </form>

@@ -6,12 +6,12 @@ $(() => {
     console.log(dish);
     return `
       <div class="dish d-flex flex-row justify-content-between align-items-center">
-        <div class="details d-flex flex-column">
+        <div class="details d-flex flex-column align-items-center">
           <span>${dish.name}</span>
         </div>
-        <div class="details d-flex flex-column">
-          <span>$${dish.price/100}</span>
+        <div class="details d-flex flex-column align-items-center">
           <span>x${dish.quantity}</span>
+          <span>$${dish.price/100}</span>
         </div>
       </div>
     `;
@@ -23,7 +23,9 @@ $(() => {
         <h2>${dish.name}</h2>
         <p>${dish.description}</p>
         <div class="quantity-and-price d-flex flex-row justify-content-between align-items-center">
-          <div class="">some quantity counter</div>
+          <div>
+            <input type="number" value="0" min="0" max="100" step="1"/>
+          </div>
           <div class="d-flex flex-column justify-content-start align-items-center">
             <label for="select">$${dish.price / 100}</label>
             <input class="select-dish btn btn-primary btn-sm" type="button" name="select" value="Select">
@@ -33,7 +35,7 @@ $(() => {
     `;
   };
 
-  const addItemToOrder = function(selectedDish, currentOrderInfo) {
+  const addItemToOrder = function(selectedDish, currentOrderInfo, dishQuantity) {
     const selectedDishObject = function() {
       return allDishes.find((dish) => {
         return dish.name === selectedDish;
@@ -46,10 +48,11 @@ $(() => {
       price: selectedDishObject().price,
       quantity: function() {
         if (currentOrderInfo[selectedDishObject().id]) {
-          return ++this.quantity;
+          this.quantity += dishQuantity;
         } else {
-          return this.quantity = 1;
+          this.quantity = dishQuantity;
         }
+        return this.quantity;
       }()
     }
   }
@@ -58,6 +61,7 @@ $(() => {
     allDishes.forEach((dishEntry) => {
       $('#menu').append(createDishElement(dishEntry));
     });
+    $("input[type='number']").inputSpinner();
   };
 
   const renderTotalPrice = function() {
@@ -65,10 +69,11 @@ $(() => {
     let $selectDishButton = $('.select-dish');
     $selectDishButton.click(function(event) {
       const itemName = $(this).parent().parent().parent().children('h2').text();
-      addItemToOrder(itemName, currentOrder);
+      const itemQuantity = Number($(this).parent().parent().children('div').children('input').val());
+      addItemToOrder(itemName, currentOrder, itemQuantity);
       let currentTotal = 0;
       for (let dish in currentOrder) {
-        currentTotal += (currentOrder[dish].price * currentOrder[dish].quantity);
+        currentTotal += Number((currentOrder[dish].price * currentOrder[dish].quantity));
       }
       $orderTotal.text(`$${currentTotal / 100}`);
     });

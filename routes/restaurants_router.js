@@ -14,7 +14,7 @@ module.exports = (db) => {
         getItemsPerOrder(db)
           .then(items => {
             console.log('render');
-            res.render("restaurant", { user: true, orders, items });
+            res.render("restaurant", { user: 'Restaurant', orders, items });
           })
       })
       .catch(err => {
