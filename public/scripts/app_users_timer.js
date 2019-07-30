@@ -6,7 +6,6 @@ $(() => {
       let dura = idDruation.sum * 1000;
       let cre = idDruation.created_at;
       if (id = $(`#order${id}`).val()) {
-        console.log(`what is the id ====== ${id} dura ===== ${dura}`)
         timeClock(id, cre, dura);
       }
 

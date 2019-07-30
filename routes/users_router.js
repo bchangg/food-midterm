@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { queryConfig, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
-// const timeClock = require('../public/scripts/countdownTimer')
-
 
 module.exports = (db) => {
+  //coundown timer
   router.get("/", (request, response) => {
     db.query(`
       SELECT order_id, orders.created_at, sum(order_duration)
