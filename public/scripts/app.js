@@ -1,16 +1,18 @@
 $(() => {
   let allDishes;
-  let orderDetails = {};
+  let currentOrder = {};
 
   const createOrderDetailsElement = function(dish) {
-    console.log(dish[0].name);
+    console.log(dish);
     return `
-      <div class="dish d-flex flex-row justify-content-around align-items-center">
+      <div class="dish d-flex flex-row justify-content-between align-items-center">
         <div class="details d-flex flex-column">
-          <span>Dish NAME</span>
-          <span>Dish DETAILS THIS CALKSDJFLKASJ FLKSADFJL KASDJFLKASD JFLKSADJFLK ASDJFKLSAJLKFJASLKFJLKSADJFKLSADJFLKASDJLKCLAHDFLKASJCLKADSHFLASDKJCL;KASJDF;LASDKJF;LSKADJF;LASKDJF;LKJ</span>
+          <span>${dish.name}</span>
         </div>
-        <span>Dish QUANTITY</span>
+        <div class="details d-flex flex-column">
+          <span>$${dish.price/100}</span>
+          <span>x${dish.quantity}</span>
+        </div>
       </div>
     `;
   }
@@ -52,30 +54,40 @@ $(() => {
     }
   }
 
-  const renderTotalPrice = function() {
-    let $orderTotal = $('#order-total');
-    let $selectDishButton = $('.select-dish');
-    $selectDishButton.click(function(event) {
-      const itemName = $(this).parent().parent().parent().children('h2').text();
-      addItemToOrder(itemName, orderDetails);
-      let currentTotal = 0;
-      for (dish in orderDetails) {
-        currentTotal += (orderDetails[dish].price * orderDetails[dish].quantity);
-      }
-      $orderTotal.text(`$${currentTotal / 100}`);
-    });
-  }
-
   const renderDishes = function(allDishes) {
     allDishes.forEach((dishEntry) => {
       $('#menu').append(createDishElement(dishEntry));
     });
   };
 
+  const renderTotalPrice = function() {
+    let $orderTotal = $('#order-total');
+    let $selectDishButton = $('.select-dish');
+    $selectDishButton.click(function(event) {
+      const itemName = $(this).parent().parent().parent().children('h2').text();
+      addItemToOrder(itemName, currentOrder);
+      let currentTotal = 0;
+      for (let dish in currentOrder) {
+        currentTotal += (currentOrder[dish].price * currentOrder[dish].quantity);
+      }
+      $orderTotal.text(`$${currentTotal / 100}`);
+    });
+  }
+
+  const renderOrderDetails = function() {
+    $('.dish').remove();
+    let $orderPriceSummary = $('.order-price-summary');
+    for (let dishSelection in currentOrder) {
+      $orderPriceSummary.before(createOrderDetailsElement(currentOrder[dishSelection]));
+    }
+    $('#final-price').text($('#order-total').text());
+  }
+
   const orderDetailsToggler = function() {
     const $checkoutButton = $('#checkout');
     const $closeButton = $('#close');
     $checkoutButton.click(function(event) {
+      renderOrderDetails();
       $('.order-details-container').css("display", "block");
     });
     $closeButton.click(function(event) {

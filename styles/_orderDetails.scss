@@ -19,7 +19,7 @@ div.order-details-container {
     overflow-y: scroll;
     position: relative;
     background-color: red;
-    padding: 2rem 2rem 4rem;
+    padding: 2rem;
 
     .dish {
       padding: 0.5rem 2rem;
@@ -32,10 +32,10 @@ div.order-details-container {
       }
     }
 
-    button {
-      position: absolute;
-      color: purple;
-      right: 2rem;
-    }
+    // button {
+    //   position: absolute;
+    //   color: purple;
+    //   right: 2rem;
+    // }
   }
 }
