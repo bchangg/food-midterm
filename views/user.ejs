@@ -11,9 +11,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app_users.js"></script>
+  <script type="text/javascript" src="/scripts/app_users_timer.js"></script>
 
-  </script>
 </head>
 
 <body>
@@ -23,10 +22,18 @@
     <% console.log(status) %>
     <% for (let i of status) { %>
       <div class=status>
+          <% if (i.order_status == "Preparing") { %>
+            <input type=hidden id="order<%= i.id %>" value="<%= i.id %>">
+            <span class="countDown<%= i.id %>"></span>
+          <% } %>
           <span class="user_status_text">Order#:<%=i.id %> Status:</span>
           <span class="user_status_show"><%=i.order_status %></span>
           <% if (i.order_status == "Pending") { %>
-            <button type="button" class="btn btn-danger">Cancel</button>
+            <form action="/users" method="POST" style="display: inline;">
+              <input type=hidden name=user_id value="<%= i.user_id %>">
+              <input type=hidden name=order_id value="<%= i.id %>">
+              <button type="submit" class="btn btn-danger">Cancel</button>
+            </form>
           <% } %>
       </div>
     <% } %>

@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getPendingAndInProgressOrders, getItemsPerOrder, updateOrderStatus } = require('../query/restaurantQueries');
-
-
+const { getPendingAndInProgressOrders, getItemsPerOrder, updateOrderStatus, checkDb } = require('../query/restaurantQueries');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -24,18 +22,27 @@ module.exports = (db) => {
       });
   });
 
-
-
   router.post("/", (request, response) => {
-    updateOrderStatus(db, request)
-      .then(() => {
-        response.redirect("/restaurants")
+    const orderId = request.body.order_id;
+    const orderStatus = request.body.current_status;
+    checkDb(db, [orderId, orderStatus])
+      .then(data => {
+        if (data) {
+          updateOrderStatus(db, request)
+            .then(() => {
+              console.log('redirect to restaurants ')
+              response.redirect("/restaurants")
+            })
+            .catch(err => {
+              console.log('error:', err);
+              response.status(500)
+                .json({ error: err.message });
+            });
+        } else {
+          response.redirect("/restaurants");
+        }
       })
-      .catch(err => {
-        console.log('error:', err);
-        response.status(500)
-          .json({ error: err.message });
-      });
+
   });
 
   return router;
