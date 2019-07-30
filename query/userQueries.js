@@ -1,4 +1,4 @@
-const queryConfigQuery =
+const getNameFromUserIdQuery =
   `SELECT name FROM users WHERE id = $1`;
 
 const getOrdersPerUserQuery = `
@@ -13,8 +13,8 @@ const getItemsPerUserQuery = `
   WHERE user_id = $1;
 `;
 
-function queryConfig(db, userData) {
-  return db.query(queryConfigQuery, [userData])
+function getNameFromUserId(db, userData) {
+  return db.query(getNameFromUserIdQuery, [userData])
     .then(user => {
       return user.rows[0].name;
     })
@@ -35,7 +35,7 @@ function getItemsPerUser(db, userId) {
 };
 
 module.exports = {
-  queryConfig,
+  getNameFromUserId,
   getOrdersPerUser,
   getItemsPerUser
 }

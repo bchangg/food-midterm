@@ -1,6 +1,6 @@
 $(() => {
   const createDishElement = function(dish) {
-    const dishName = dish.name.charAt(0).toUpperCase() + dish.name.slice(1).split('_').join(' ');
+    const dishName = dish.name;
     const dishDescription = dish.description.charAt(0).toUpperCase() + dish.description.slice(1);
     const dishPrice = dish.price / 100;
     const elementString = `

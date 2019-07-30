@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { queryConfig, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
+const { getNameFromUserId, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
 
 
 module.exports = (db) => {
@@ -27,7 +27,7 @@ module.exports = (db) => {
   router.get("/:id", (request, response) => {
     const userId = request.params.id;
 
-    queryConfig(db, userId)
+    getNameFromUserId(db, userId)
       .then(user => {
         if (user) {
           getOrdersPerUser(db, userId)
