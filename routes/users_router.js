@@ -7,6 +7,7 @@
 
 const express = require('express');
 const router = express.Router();
+const timeClock = require('../public/scripts/countdownTimer')
 
 module.exports = (db) => {
   // show the current status of user's order
@@ -77,6 +78,20 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
     });
+
+  router.get("/timer", (request, response) => {
+    const userId = request.params.id;
+    db.query(`
+      SELECT order_duration
+      FROM orders_details
+      WHERE user_id = ${userId}
+    `).then(data => {
+      console.log(data.rows)
+      timeClock();
+    })
+
+  });
+
 
   return router;
 };
