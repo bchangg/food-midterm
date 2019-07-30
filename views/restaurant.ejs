@@ -8,14 +8,15 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-  <link rel="stylesheet" href="/styles/layout_restaurants.css" type="text/css" />
 
 
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+  <link rel="stylesheet" href="/styles/layout_restaurants.css" type="text/css" />
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/scripts/polling.js"></script>
 
 </head>
 
@@ -37,7 +38,12 @@
       <tbody>
 
         <!-- ORDER -->
-        <td class='s'><%= orders[i].order_id %></td>
+
+        <td class='s'>
+          <li class="list-group-item">
+            <%= orders[i].order_id %>
+          </li>
+        </td>
 
         <!-- DISHES -->
         <td class='m'>
@@ -59,19 +65,22 @@
         </td>
 
         <!-- STATUS -->
-        <td class='s'><%= orders[i].order_status %></td>
+        <td class='s'>
+          <li class="list-group-item">
+            <%= orders[i].order_status %>
+          </li>
+        </td>
 
         <!-- BUTTON -->
         <td class='s'>
           <% switch (orders[i].order_status) {
               case 'Pending' : %>
-          <li class="list-group-item">
-            <form action="/restaurants" method="POST">
-              <input type=hidden name=order_status value="Preparing">
-              <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
-              <button type="submit" class="btn btn-info">Accept</button>
-            </form>
-          </li>
+          <form action="/restaurants" method="POST">
+            <input type=hidden name=order_status value="Preparing">
+            <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
+            <button type="submit" class="btn btn-info ">Accept</button>
+          </form>
+
           <% break;
             case 'Preparing' : %>
           <form action="/restaurants" method="POST">

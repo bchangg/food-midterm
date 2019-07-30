@@ -11,9 +11,11 @@ module.exports = (db) => {
 
     getPendingAndInProgressOrders(db)
       .then((orders) => {
-        getItemsPerOrder(db).then(items => {
-          res.render("restaurant", { user: true, orders, items });
-        })
+        getItemsPerOrder(db)
+          .then(items => {
+            console.log('render');
+            res.render("restaurant", { user: true, orders, items });
+          })
       })
       .catch(err => {
         console.log('error:', err);
@@ -21,6 +23,8 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+
 
   router.post("/", (request, response) => {
     updateOrderStatus(db, request)

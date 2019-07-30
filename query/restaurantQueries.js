@@ -18,12 +18,12 @@ JOIN dishes ON orders_details.dish_id = dishes.id
 GROUP BY orders_details.order_id, dishes.name, orders_details.quantity
 ORDER BY orders_details.order_id;`;
 
-const updateOrderStatusQuery = {
-  text: ` UPDATE orders
+const updateOrderStatusQuery =
+  `UPDATE orders
   SET order_status =  $1
   WHERE id = $2
-  RETURNING *;`,
-}
+  RETURNING *;`;
+
 
 function getPendingAndInProgressOrders(db) {
   return db.query(getPendingAndInProgressOrdersQuery).then(ordersFromQuery => {
