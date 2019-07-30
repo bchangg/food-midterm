@@ -6,9 +6,17 @@ div.order-details-container {
   height: 100%;
   padding: 10rem;
   top: 0;
-  z-index: 10;
+
+  #close {
+    position: absolute;
+    top: 11rem;
+    right: 11rem;
+    z-index: 1;
+  }
 
   .order-details {
+    max-height: 80vh;
+    overflow-y: scroll;
     position: relative;
     background-color: red;
     padding: 2rem 2rem 4rem;

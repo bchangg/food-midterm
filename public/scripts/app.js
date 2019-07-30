@@ -29,17 +29,31 @@ $(() => {
   // if someone was to go into the developer tools and change the prices
   // and then click order, they will be able to get everything for free (theoretically)
   const addPriceToTotal = function() {
-    $selectDish = $('.select-dish');
-    $orderPrice = $('#order-price');
-    $currentTotal = Number($orderPrice.text().slice(1));
+    // NOTE: ADD QUERY SHIT TO HERE BEFORE YOU SUBMIT THIS
+    let $selectDish = $('.select-dish');
+    let $orderPrice = $('#order-price');
+    let $currentTotal = Number($orderPrice.text().slice(1));
     $selectDish.click(function(event) {
       $currentTotal += Number($(this).parent().children('label').text().slice(1));
       $orderPrice.text(`$${$currentTotal}`);
     });
   }
 
+  const showOrderDetails = function() {
+    const $checkoutButton = $('#checkout');
+    const $closeButton = $('#close');
+    $checkoutButton.click(function(event) {
+      $('.order-details-container').css("display", "block");
+    });
+    $closeButton.click(function(event) {
+      $('.order-details-container').css("display", "none");
+    });
+  }
+
+
   const setPageInteractions = function() {
     addPriceToTotal();
+    showOrderDetails();
   }
 
   const loadDishes = function() {
