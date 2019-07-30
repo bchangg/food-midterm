@@ -1,4 +1,3 @@
-
 const queryConfigQuery =
   `SELECT name FROM users WHERE id = $1`;
 
@@ -14,7 +13,6 @@ const getItemsPerUserQuery = `
   WHERE user_id = $1;
 `;
 
-
 function queryConfig(db, userData) {
   return db.query(queryConfigQuery, [userData])
     .then(user => {
@@ -28,6 +26,7 @@ function getOrdersPerUser(db, userId) {
       return orderData.rows;
     });
 }
+
 function getItemsPerUser(db, userId) {
   return db.query(getItemsPerUserQuery, [userId])
     .then(orderStatusData => {
@@ -40,4 +39,3 @@ module.exports = {
   getOrdersPerUser,
   getItemsPerUser
 }
-

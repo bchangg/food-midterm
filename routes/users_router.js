@@ -4,6 +4,25 @@ const { queryConfig, getOrdersPerUser, getItemsPerUser } = require('../query/use
 
 
 module.exports = (db) => {
+  router.post('/', (request, response) => {
+    const username = request.body.currentUsername;
+    const queryConfig = {
+      text: `
+      SELECT id
+      FROM users
+      WHERE name = $1;`,
+      values: [username]
+    }
+    db.query(queryConfig)
+      .then((queryResponse) => {
+        response.redirect(`/users/${queryResponse.rows[0].id}`);
+      })
+      .catch((error) => {
+        response.redirect('/');
+      })
+
+  });
+
   // show the current status of user's order
   router.get("/:id", (request, response) => {
     const userId = request.params.id;
@@ -15,8 +34,8 @@ module.exports = (db) => {
             .then(orders => {
               getItemsPerUser(db, userId)
                 .then(status => {
-                  response.render("user", { user, orders, status })
-                })
+                  response.render("user", { user, orders, status });
+                });
             })
         }
       })

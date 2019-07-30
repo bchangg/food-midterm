@@ -1,25 +1,38 @@
 
-
-form{
+.currentOrder .status {
+  border: 2px solid green;
+  border-radius: 20px;
+  width: 60%;
   text-align: center;
-}
+  margin: auto;
+  padding: 10px;
+  margin-bottom: 5px;
 
-th{
-  text-align: -webkit-center;
-  padding: 10px 5px;
-  background-color: rgb(227, 239, 250);
-  border-bottom-style: ridge;
-}
+    .user_status_text {
+      font-size: 20px;
+      color:rgb(0, 0, 0);
+      margin: 5px;
+      vertical-align: middle
+    }
 
-.col {
-  text-align: center;
-  text-align: center;
+    .user_status_show {
+      border: 2px solid rgb(251, 255, 0);
+      border-radius: 10px;
+      vertical-align: middle;
+      margin: 5px;
+      padding: 3px
+    }
+
+    button {
+      margin-left: 10px
+    }
 }
 
 .container {
   margin: 1em;
 
   .order {
+    box-sizing: border-box;
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
@@ -35,4 +48,3 @@ th{
     }
   }
 }
-

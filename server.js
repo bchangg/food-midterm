@@ -64,11 +64,9 @@ app.get("/", (request, response) => {
   }
   db.query(queryConfig)
     .then((queryResponse) => {
-      console.log(queryResponse);
-      console.log(queryResponse.rows[0].name);
       const userName = queryResponse.rows[0].name;
       if (!userName) {
-        response.render("index", { user: false });
+        response.render("index", { user: userName });
       } else {
         response.render("index", { user: userName });
       }
@@ -82,7 +80,7 @@ app.post("/login", (request, response) => {
   const userName = request.body.user;
   const queryConfig = {
     text: `
-    SELECT id AS user_id FROM users WHERE name = $1
+      SELECT id AS user_id FROM users WHERE name = $1
     `,
     values: [userName]
   }
@@ -92,7 +90,7 @@ app.post("/login", (request, response) => {
       request.session.user = userId; // set unique cookie for each user using
       // their id so that two users with the same name don't get the same cookie
       if (Number(userId) !== 4) {
-        response.redirect(`/users/${userId}`)
+        response.redirect(`/`)
       } else {
         response.redirect(`/restaurants`)
       }

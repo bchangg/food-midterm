@@ -5,28 +5,33 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <% if (!user) { %>
-      <form class="form-inline" action="/login" method="post">
-        <div class="btn-group" role="group" aria-label="Users's drop down selection">
+      <div class="d-flex flex-row align-items-center">
+        <% if (!user) { %>
+        <form class="form-inline" action="/login" method="post">
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Select User
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <input class="dropdown-item" type="submit" name="user" value="Bob">
-              <input class="dropdown-item" type="submit" name="user" value="Alice">
-              <input class="dropdown-item" type="submit" name="user" value="Frodo">
+            <div class="btn-group" role="group" aria-label="Users's drop down selection">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select User
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <input class="dropdown-item" type="submit" name="user" value="Bob">
+                <input class="dropdown-item" type="submit" name="user" value="Alice">
+                <input class="dropdown-item" type="submit" name="user" value="Frodo">
+              </div>
             </div>
+            <button class="btn btn-primary" type="submit" name="user" value="Restaurant">Restaurant</button>
           </div>
-          <button class="btn btn-primary" type="submit" name="user" value="Restaurant">Restaurant</button>
-        </div>
-      </form>
-      <% } else {%>
-      <p>Signed In as <%= user %></p>
-      <form class="form-inline" action="/logout" method="post">
-        <button class="btn btn-primary" type="submit">Log Out</button>
-      </form>
-      <% } %>
+        </form>
+        <% } else {%>
+        <span>Signed In as <%= user %></span>
+        <form class="form-inline" action="/users" method="post">
+          <button class="btn btn-primary" name="currentUsername" value="<%= user %>" type="submit">Order Status</button>
+        </form>
+        <form class="form-inline" action="/logout" method="post">
+          <button class="btn btn-primary" type="submit">Log Out</button>
+        </form>
+        <% } %>
+      </div>
     </div>
   </nav>
 </header>
