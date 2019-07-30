@@ -1,50 +1,78 @@
 $(() => {
+  let allDishes;
+  let orderDetails = {};
+
+  const createOrderDetailsElement = function(dish) {
+    console.log(dish[0].name);
+    return `
+      <div class="dish d-flex flex-row justify-content-around align-items-center">
+        <div class="details d-flex flex-column">
+          <span>Dish NAME</span>
+          <span>Dish DETAILS THIS CALKSDJFLKASJ FLKSADFJL KASDJFLKASD JFLKSADJFLK ASDJFKLSAJLKFJASLKFJLKSADJFKLSADJFLKASDJLKCLAHDFLKASJCLKADSHFLASDKJCL;KASJDF;LASDKJF;LSKADJF;LASKDJF;LKJ</span>
+        </div>
+        <span>Dish QUANTITY</span>
+      </div>
+    `;
+  }
+
   const createDishElement = function(dish) {
-    const dishName = dish.name;
-    const dishDescription = dish.description.charAt(0).toUpperCase() + dish.description.slice(1);
-    const dishPrice = dish.price / 100;
-    const elementString = `
+    return `
       <article class="d-flex flex-column m-2">
-        <h2>${dishName}</h2>
-        <p>${dishDescription}</p>
+        <h2>${dish.name}</h2>
+        <p>${dish.description}</p>
         <div class="quantity-and-price d-flex flex-row justify-content-between align-items-center">
           <div class="">some quantity counter</div>
           <div class="d-flex flex-column justify-content-start align-items-center">
-            <label for="select">$${dishPrice}</label>
+            <label for="select">$${dish.price / 100}</label>
             <input class="select-dish btn btn-primary btn-sm" type="button" name="select" value="Select">
           </div>
         </div>
       </article>
-      `;
-    return elementString;
+    `;
   };
+
+  const addItemToOrder = function(selectedDish, currentOrderInfo) {
+    const selectedDishObject = function() {
+      return allDishes.find((dish) => {
+        return dish.name === selectedDish;
+      })
+    }
+    currentOrderInfo[selectedDishObject().id] = {
+      name: selectedDishObject().name,
+      description: selectedDishObject().description,
+      duration: selectedDishObject().duration,
+      price: selectedDishObject().price,
+      quantity: function() {
+        if (currentOrderInfo[selectedDishObject().id]) {
+          return ++this.quantity;
+        } else {
+          return this.quantity = 1;
+        }
+      }()
+    }
+  }
+
+  const renderTotalPrice = function() {
+    let $orderTotal = $('#order-total');
+    let $selectDishButton = $('.select-dish');
+    $selectDishButton.click(function(event) {
+      const itemName = $(this).parent().parent().parent().children('h2').text();
+      addItemToOrder(itemName, orderDetails);
+      let currentTotal = 0;
+      for (dish in orderDetails) {
+        currentTotal += (orderDetails[dish].price * orderDetails[dish].quantity);
+      }
+      $orderTotal.text(`$${currentTotal / 100}`);
+    });
+  }
+
   const renderDishes = function(allDishes) {
     allDishes.forEach((dishEntry) => {
       $('#menu').append(createDishElement(dishEntry));
     });
   };
 
-  // COMBAK: THIS IMPLEMENTATION IS NOT SAFE
-  // it works by grabbing the price from the parent element directly
-  // if someone was to go into the developer tools and change the prices
-  // and then click order, they will be able to get everything for free (theoretically)
-  const addOrderToTotal = function() {
-    let $orderTotal = $('#order-total');
-    let $selectDish = $('.select-dish');
-    let $currentTotal = Number($orderTotal.text().slice(1));
-    $selectDish.click(function(event) {
-      for (let dish in allDishes) {
-        const itemName = $(this).parent().parent().parent().children('h2').text();
-        if (allDishes[dish].name === itemName) {
-          $currentTotal += Number(allDishes[dish].price / 100);
-          break;
-        }
-      }
-      $orderTotal.text(`$${$currentTotal}`);
-    });
-  }
-
-  const showOrderDetails = function() {
+  const orderDetailsToggler = function() {
     const $checkoutButton = $('#checkout');
     const $closeButton = $('#close');
     $checkoutButton.click(function(event) {
@@ -55,21 +83,15 @@ $(() => {
     });
   }
 
-  const setPageInteractions = function() {
-    addOrderToTotal();
-    showOrderDetails();
-  }
-
-  let allDishes;
   const loadDishes = function() {
     $.get("/dishes/")
       .then((data) => {
         allDishes = data;
         renderDishes(data)
-        setPageInteractions();
+        renderTotalPrice();
+        orderDetailsToggler();
       });
   }
 
   loadDishes();
-
 });
