@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS orders CASCADE;
 CREATE TABLE orders (
   id SERIAL PRIMARY KEY NOT NULL,
-  created_at TIME DEFAULT CURRENT_TIME,
+  created_at TIMESTAMP DEFAULT NOW(),
   order_status VARCHAR(255) DEFAULT 'Pending',
   user_id int REFERENCES users (id) ON DELETE CASCADE
 );
