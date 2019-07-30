@@ -13,6 +13,7 @@ module.exports = (db) => {
       .then((orders) => {
         getItemsPerOrder(db)
           .then(items => {
+            console.log('render');
             res.render("restaurant", { user: true, orders, items });
           })
       })
@@ -22,6 +23,8 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+
 
   router.post("/", (request, response) => {
     updateOrderStatus(db, request)
