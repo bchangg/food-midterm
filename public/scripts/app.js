@@ -24,7 +24,7 @@ $(() => {
     });
   };
 
-  // COMBAK: this implementation is not safe
+  // COMBAK: THIS IMPLEMENTATION IS NOT SAFE
   // it works by grabbing the price from the parent element directly
   // if someone was to go into the developer tools and change the prices
   // and then click order, they will be able to get everything for free (theoretically)

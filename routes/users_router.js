@@ -53,8 +53,6 @@ module.exports = (db) => {
       .catch((error) => {
         reponse.redirect(`/`);
       });
-
-    const user = request.params.id;
   });
 
   // router.get("/:id", (request, response) => {
