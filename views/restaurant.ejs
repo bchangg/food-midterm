@@ -36,78 +36,82 @@
       </thead>
       <% for(let i = 0; i < orders.length; i++) { %>
       <tbody>
-
         <!-- ORDER -->
-
         <td class='s'>
           <li class="list-group-item">
             <%= orders[i].order_id %>
           </li>
         </td>
-
         <!-- DISHES -->
         <td class='m'>
           <% for(let z = 0; z < items.length; z++) { %>
           <%if(items[z].order_id === orders[i].order_id){%>
           <li class="list-group-item"><%= items[z].dish_name%></li>
           <%}%>
-              <%}%>
+                  <%}%>
         </td>
-
         <!-- QUANTITY -->
         <td class='s'>
           <% for(let z = 0; z < items.length; z++) { %>
           <%if(items[z].order_id === orders[i].order_id){%>
-
           <li class="list-group-item"><%= items[z].quantity%></li>
           <%}%>
-              <%}%>
+                  <%}%>
         </td>
-
         <!-- STATUS -->
         <td class='s'>
           <li class="list-group-item">
             <%= orders[i].order_status %>
           </li>
         </td>
-
         <!-- BUTTON -->
         <td class='s'>
           <% switch (orders[i].order_status) {
-              case 'Pending' : %>
+                  case 'Pending' : %>
           <form action="/restaurants" method="POST">
-            <input type=hidden name=order_status value="Preparing">
-            <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
+            <input type=hidden class="order-status" name=order_status value="Preparing">
+            <input type=hidden class="current_status" name=current_status value="Pending">
+            <input type=hidden class="order-id" name=order_id value="<%= orders[i].order_id  %>">
             <button type="submit" class="btn btn-info ">Accept</button>
           </form>
-
           <% break;
-            case 'Preparing' : %>
+                  case 'Cancelling' : %>
+          <form action="/restaurants" method="POST">
+            <input type=hidden class="order-status" name=order_status value="Preparing">
+            <input type=hidden class="current_status" name=current_status value="Cancelling">
+            <input type=hidden class="order-id" name=order_id value="<%= orders[i].order_id  %>">
+            <button type="submit" class="btn btn-info ">Accept</button>
+          </form>
+          <% break;
+                case 'Preparing' : %>
           <form action="/restaurants" method="POST">
             <input type=hidden name=order_status value="Ready">
+            <input type=hidden class="current_status" name=current_status value="Preparing">
             <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
             <button type="submit" class="btn btn-primary">Ready</button>
           </form>
           <% break;
-          case 'Ready' : %>
+              case 'Ready' : %>
           <form action="/restaurants" method="POST">
             <input type=hidden name=order_status value="Complete">
+            <input type=hidden class="current_status" name=current_status value="Ready">
             <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
             <button type="submit" class="btn btn-success">Complete</button>
           </form>
           <% break;
-          case 'Cancelled' : %>
+              case 'Cancelled' : %>
           <form action="/restaurants" method="POST">
+            <input type=hidden class="current_status" name=current_status value="Cancelled">
             <input type=hidden name=order_status value="CANCELATTION_COMPLETE">
             <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
             <button type="submit" class="btn btn-success">Complete</button>
           </form>
           <% break;
-              } %>
+                  } %>
         </td>
       </tbody>
       <%}%>
-    </table>
+        </table>
   </section>
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
