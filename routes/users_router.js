@@ -4,11 +4,12 @@ const { updateOrdersTableWIthTotalPriceTotalDuration, seedOrdersDetailsTableWith
 
 module.exports = (db) => {
   router.post('/', (request, response) => {
-    getUserIdFromName(db, request)
+    getUserIdFromName(db, request.body.currentUsername)
       .then((queryResponse) => {
         response.redirect(`/users/${queryResponse}`);
       })
       .catch((error) => {
+        console.log(error);
         response.redirect('/');
       });
   });

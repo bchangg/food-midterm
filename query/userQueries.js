@@ -26,8 +26,8 @@ const seedOrdersDetailsTableWithCurrentOrderQuery = `
   INSERT INTO orders_details (
     dish_id,
     order_id,
-    total_duration_per_dish,
-    total_price_per_dish,
+    order_duration,
+    order_price,
     quantity
   )
   VALUES ($1, $2, $3, $4, $5)
@@ -37,9 +37,9 @@ const seedOrdersDetailsTableWithCurrentOrderQuery = `
 const updateOrdersTableWIthTotalPriceTotalDurationQuery = `
   UPDATE orders
   SET total_price = (
-    SELECT sum(total_price_per_dish) FROM orders_details WHERE order_id = $1
+    SELECT sum(order_price) FROM orders_details WHERE order_id = $1
   ), total_duration = (
-    SELECT sum(total_duration_per_dish) FROM orders_details WHERE order_id = $1
+    SELECT sum(order_duration) FROM orders_details WHERE order_id = $1
   )
   WHERE id = $1;
 `;
