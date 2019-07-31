@@ -15,17 +15,30 @@
       vertical-align: middle
     }
 
-    .user_status_show {
-      border: 2px solid rgb(251, 255, 0);
-      border-radius: 10px;
-      vertical-align: middle;
-      margin: 5px;
-      padding: 3px
-    }
+th{
+  text-align: -webkit-center;
+  padding: 10px 5px;
+  background-color: rgb(227, 239, 250);
+  border-bottom-style: ridge;
+  border-left-style: ridge;
 
-    button {
-      margin-left: 10px
-    }
+}
+
+.buttons{
+  display: inline;
+}
+
+
+.statusContainer{
+  border-style: ridge;
+}
+
+.statusDiv{
+  text-align: center;
+}
+
+.col {
+  text-align: center;
 }
 
 .container {
@@ -40,10 +53,12 @@
     border-width: 1px 1 1 1px;
 
     .s {
+      border-style: ridge;
       width: 15%
     }
 
     .m {
+      border-style: ridge;
       width: 40%
     }
   }

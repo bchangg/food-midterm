@@ -67,7 +67,6 @@ module.exports = (db) => {
   // show the current status of user's order
   router.get("/:id", (request, response) => {
     const userId = request.params.id;
-
     getNameFromUserId(db, userId)
       .then(user => {
         if (user) {
@@ -111,6 +110,7 @@ module.exports = (db) => {
     const orderId = request.body.order_id;
     const user = request.body.user_id;
     db.query(`
+
         SELECT id, order_status, user_id
         FROM orders
         WHERE id = ${orderId}

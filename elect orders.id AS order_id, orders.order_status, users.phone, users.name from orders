@@ -1,0 +1,14 @@
+      dish_name      | order_id | quantity 
+---------------------+----------+----------
+ Cheeseburger        |        1 |        2
+ Hamburger           |        1 |        1
+ Cheeseburger        |        2 |        2
+ Sake                |        2 |        1
+ Vegan Protein Shake |        2 |        3
+ m&ms                |        3 |        4
+ Sake                |        3 |        1
+ Banana Bread        |        4 |        1
+ Banana Bread        |        5 |        3
+ m&ms                |        6 |        2
+(10 rows)
+

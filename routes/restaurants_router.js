@@ -1,17 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { getPendingAndInProgressOrders, getItemsPerOrder, updateOrderStatus, checkDb } = require('../query/restaurantQueries');
+const { sendMessage } = require('../twilio/send_sms');
+const { getPendingAndInProgressOrders, getItemsPerOrder, updateOrderStatus, checkDb, getCompletedOrders, getReadyForPickup } = require('../query/restaurantQueries');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    // render order status
-    console.log("I HAVE REACHED RESTO page");
-
     getPendingAndInProgressOrders(db)
       .then((orders) => {
         getItemsPerOrder(db)
           .then(items => {
-            console.log('render');
             res.render("restaurant", { user: 'Restaurant', orders, items });
           })
       })
@@ -22,15 +19,72 @@ module.exports = (db) => {
       });
   });
 
-  router.post("/", (request, response) => {
-    const orderId = request.body.order_id;
-    const orderStatus = request.body.current_status;
-    checkDb(db, [orderId, orderStatus])
+  router.get('/complete', (req, res) => {
+    console.log('complete');
+    getCompletedOrders(db)
+      .then((orders) => {
+        getItemsPerOrder(db)
+          .then(items => {
+            res.render("restaurantHistOrders", { user: true, orders, items });
+          })
+      })
+      .catch(err => {
+        console.log('error:', err);
+        res.status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.post('/sendMessage', (request, response) => {
+    sendMessage(request)
+      .then(() => {
+        response.redirect('/restaurants/pickup');
+      })
+      .catch(err => {
+        console.log('error:', err);
+        response.redirect('/restaurants/pickup');
+      });
+  });
+
+
+
+  router.get('/pickup', (req, res) => {
+    getReadyForPickup(db)
+      .then((orders) => {
+        res.render("restaurantPickup", { user: true, orders });
+      })
+      .catch(err => {
+        console.log('error:', err);
+        res.status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.post("/pickup", (request, response) => {
+    checkDb(db, request)
       .then(data => {
         if (data) {
           updateOrderStatus(db, request)
             .then(() => {
-              console.log('redirect to restaurants ')
+              response.redirect("/restaurants/pickup")
+            })
+            .catch(err => {
+              console.log('error:', err);
+              response.status(500)
+                .json({ error: err.message });
+            });
+        } else {
+          response.redirect("/restaurants/pickup");
+        }
+      })
+  });
+
+  router.post("/", (request, response) => {
+    checkDb(db, request)
+      .then(data => {
+        if (data) {
+          updateOrderStatus(db, request)
+            .then(() => {
               response.redirect("/restaurants")
             })
             .catch(err => {
@@ -42,7 +96,6 @@ module.exports = (db) => {
           response.redirect("/restaurants");
         }
       })
-
   });
 
   return router;
