@@ -29,7 +29,7 @@
 
   <div class="currentOrder">
     <% for (let i of status) { %>
-      <% if (i.order_status !== "Complete" || i.order_status !== "Cancellation_Accepted") { %>
+      <% if (i.order_status !== "Completed" || i.order_status !== "Cancelled") { %>
         <div class=status>
             <% if (i.order_status === "Preparing") { %>
               <input type=hidden id="order<%= i.id %>" value="<%= i.id %>">
@@ -50,7 +50,7 @@
   </div>  <br>
 
   <% for (let i of status) { %>
-  <% if (i.order_status !== "Complete" || i.order_status !== "Cancellation_Accepted") { %>
+  <% if (i.order_status !== "Completed" || i.order_status !== "Cancelled") { %>
   <div class="currentOrderDetail">
     <% console.log(Date(i.created_at)) %>
     Current Order Detail (Order#:<%=i.id %> Date created: <%=new Date(i.created_at) %>)

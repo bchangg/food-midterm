@@ -79,7 +79,7 @@ module.exports = (db) => {
         reponse.redirect(`/`);
       });
   });
-  // the post request will change the order_status to 'Cancelled' in the database
+  // the post request will change the order_status to 'Cancelling' in the database
   router.post("/cancel", (request, response) => {
     const orderId = request.body.order_id;
     const user = request.body.user_id;
@@ -93,7 +93,7 @@ module.exports = (db) => {
         }
         db.query(`
               UPDATE orders
-              SET order_status = 'Cancelled'
+              SET order_status = 'Cancelling'
               WHERE id = ${orderId}
               RETURNING *;
             `)
