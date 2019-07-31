@@ -3,5 +3,9 @@
   position: fixed;
   bottom: 8vh;
   right: 17vw;
-  padding: 4rem;
+  padding: 1rem;
+  @media all and (max-width: 1024px) {
+    right: 5vw;
+    bottom: 8vh;
+  }
 }
