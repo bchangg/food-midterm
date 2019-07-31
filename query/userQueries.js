@@ -60,8 +60,8 @@ function seedOrdersTableWithUserIdReturningOrderId(db, userId) {
     });
 }
 
-function getUserIdFromName(db, userData) {
-  return db.query(getIdFromUserNameQuery, [userData.body.currentUsername])
+function getUserIdFromName(db, userName) {
+  return db.query(getIdFromUserNameQuery, [userName])
     .then((data) => {
       return data.rows[0].id;
     });
