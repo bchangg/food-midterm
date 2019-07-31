@@ -17,7 +17,7 @@
 
 <body>
   <% include partials/_header %>
-  <h1>USER ORDER STATUS PAGE</h1>
+  <h1>USER ORDER HISTORY</h1>
   <div class="buttonsss">
     <form action="/users/<%=status[0].user_id%>" method="GET" style="display: inline;">
       <button id="current" type="submit" class="btn btn-outline-success">Current Orders</button>
@@ -27,30 +27,8 @@
     </form>
   </div>
 
-  <div class="currentOrder">
-    <% for (let i of status) { %>
-      <div class=status>
-          <% if (i.order_status == "Preparing") { %>
-            <input type=hidden id="order<%= i.id %>" value="<%= i.id %>">
-            <span class="countDown<%= i.id %>"></span>
-          <% } %>
-          <span class="user_status_text">Order#:<%=i.id %> Status:</span>
-          <span class="user_status_show"><%=i.order_status %></span>
-          <% if (i.order_status == "Pending") { %>
-            <form action="/users/cancel" method="POST" style="display: inline;">
-              <input type=hidden name=user_id value="<%= i.user_id %>">
-              <input type=hidden name=order_id value="<%= i.id %>">
-              <button type="submit" class="btn btn-danger">Cancel</button>
-            </form>
-          <% } %>
-      </div>
-    <% } %>
-  </div>  <br>
-
   <% for (let i of status) { %>
-  <div class="currentOrderDetail">
-    <% console.log(Date(i.created_at)) %>
-    Current Order Detail (Order#:<%=i.id %> Create Date:<%=new Date(i.created_at) %>)
+  <div class="currentOrderDetail">Current Order Detail (Order#:<%=i.id %>)
     <table class="orderDetail">
       <thead>
         <th scope="col" id="tc">Name</th>
@@ -61,28 +39,28 @@
       </thead>
       <tbody>
         <% let total = 0 %>
-          <% for (let order of orders) { %>
-            <% if (order.order_id === i.id) { %>
-              <tr>
-                <td class='s' id="tc"><%=order.name %></td>
-                <td class='s'><img src=<%=order.imgurl %> height='100px'></td>
-                <td class='m'><%=order.description %></td>
-                <td class='s'><%=order.quantity %></td>
-                <td class='s'><%=order.order_price%></td>
-              </tr>
-              <% total += order.order_price %>
-            <% } %>
+        <% for (let order of orders) { %>
+          <% if (order.order_id === i.id) { %>
+            <tr>
+              <td class='s' id="tc"><%=order.name %></td>
+              <td class='s'><img src=<%=order.imgurl %> height='100px'></td>
+              <td class='m'><%=order.description %></td>
+              <td class='s'><%=order.quantity %></td>
+              <td class='s'><%=order.order_price%></td>
+            </tr>
+            <% total += order.order_price %>
           <% } %>
-        </tbody>
-            <tfoot>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>Total Price:</td>
-                <td><%=total %></td>
-              </tr>
-            </tfoot>
+        <% } %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Total Price:</td>
+          <td><%=total %></td>
+        </tr>
+      </tfoot>
     </table>
   </div>
   <% } %>

@@ -58,7 +58,27 @@ module.exports = (db) => {
         reponse.redirect(`/`);
       });
   });
+  // show user's order history
+  router.get("/:id/history", (request, response) => {
+    const userId = request.params.id;
 
+    getNameFromUserId(db, userId)
+      .then(user => {
+        if (user) {
+          getOrdersPerUser(db, userId)
+            .then(orders => {
+              getItemsPerUser(db, userId)
+                .then(status => {
+                  response.render("user_history", { user, orders, status });
+                });
+            })
+        }
+      })
+      .catch((error) => {
+        console.error(`query error on order retrieval`, error.stack);
+        reponse.redirect(`/`);
+      });
+  });
   // the post request will change the order_status to 'Cancelled' in the database
   router.post("/cancel", (request, response) => {
     const orderId = request.body.order_id;
