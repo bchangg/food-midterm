@@ -41,7 +41,7 @@ const updateOrdersTableWIthTotalPriceTotalDurationQuery = `
   ), total_duration = (
     SELECT sum(total_duration_per_dish) FROM orders_details WHERE order_id = $1
   )
-  WHERE id = $1
+  WHERE id = $1;
 `;
 
 function updateOrdersTableWIthTotalPriceTotalDuration(db, orderId) {

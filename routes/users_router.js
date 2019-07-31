@@ -15,12 +15,16 @@ module.exports = (db) => {
 
   router.post('/:userName/placeOrder', (request, response) => {
     const currentOrder = request.body;
+    console.log(currentOrder);
+    let currentUserId;
     // use request.body['foodId'] to access the request body
     getUserIdFromName(db, request.params.userName)
       .then((userId) => {
         // insert into orders table with user id if user exists
-        if (userId)
+        if (userId) {
+          currentUserId = userId;
           return seedOrdersTableWithUserIdReturningOrderId(db, userId)
+        }
       })
       .then((orderId) => {
         // got the user and order id from orders table, now can seed into orders details with current order object (currentOrder)
@@ -38,8 +42,8 @@ module.exports = (db) => {
         return promiseToFindOrderId;
       })
       .then((queryResponse) => {
-        const orderId = queryResponse.rows[0].order_id;
-        updateOrdersTableWIthTotalPriceTotalDuration(db, orderId);
+        updateOrdersTableWIthTotalPriceTotalDuration(db, queryResponse.rows[0].order_id);
+        response.send(`/users/${currentUserId}`);
       })
       .catch((error) => {
         console.error(`query access error`, error.stack);
@@ -49,7 +53,6 @@ module.exports = (db) => {
 
   //coundown timer
   router.get("/", (request, response) => {
-    console.log('entered users/ route');
     db.query(`
       SELECT order_id, orders.created_at, sum(order_duration)
       FROM orders_details JOIN orders ON orders.id = order_id
@@ -93,7 +96,6 @@ module.exports = (db) => {
         WHERE id = ${orderId}
       `)
       .then(data => {
-        console.log(data);
         if (data.rows[0].order_status !== 'Pending') {
           response.redirect(`/users/${user}`)
         }

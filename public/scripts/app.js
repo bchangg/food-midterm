@@ -39,10 +39,15 @@ $(() => {
     $placeOrderButton.click(function(event) {
       // post to a route called users/placeOrder with a sql insertion on orders with current user id
       // then do an sql insertion on orders_details with the order details (quantity, )
+      console.log(currentOrder);
       $.post(`/users/${event.currentTarget.value}/placeOrder`, currentOrder)
-        .then((data) => {
-          console.log(data);
-        })
+        .then((response) => {
+          if(response) {
+            window.location.href = response;
+          } else {
+            window.location.href = '/';
+          }
+        });
     });
   }
 
