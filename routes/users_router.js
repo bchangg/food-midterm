@@ -1,10 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const { queryConfig, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
+const { getNameFromUserId, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
 
 module.exports = (db) => {
+  router.post('/', (request, response) => {
+    const username = request.body.currentUsername;
+    const queryConfig = {
+      text: `
+          SELECT id
+          FROM users
+          WHERE name = $1;
+        `,
+      values: [username]
+    }
+
+    db.query(queryConfig)
+      .then((queryResponse) => {
+        response.redirect(`/users/${queryResponse.rows[0].id}`);
+      })
+      .catch((error) => {
+        response.redirect('/');
+      });
+  });
+
   //coundown timer
   router.get("/", (request, response) => {
+    console.log('entered users/ route');
     db.query(`
       SELECT order_id, orders.created_at, sum(order_duration)
       FROM orders_details JOIN orders ON orders.id = order_id
@@ -20,15 +41,15 @@ module.exports = (db) => {
   router.get("/:id", (request, response) => {
     const userId = request.params.id;
 
-    queryConfig(db, userId)
+    getNameFromUserId(db, userId)
       .then(user => {
         if (user) {
           getOrdersPerUser(db, userId)
             .then(orders => {
               getItemsPerUser(db, userId)
                 .then(status => {
-                  response.render("user", { user, orders, status })
-                })
+                  response.render("user", { user, orders, status });
+                });
             })
         }
       })
@@ -51,12 +72,13 @@ module.exports = (db) => {
           return response.redirect(`/users/${user}`)
         }
         db.query(`
-          UPDATE orders
-          SET order_status = 'Cancelled'
-          WHERE id = ${orderId}
-          RETURNING *;
-        `).then(data => {
-          response.redirect(`/users/${user}`)
+              UPDATE orders
+              SET order_status = 'Cancelled'
+              WHERE id = ${orderId}
+              RETURNING *;
+            `)
+          .then(data => {
+            response.redirect(`/users/${user}`)
           })
           .catch(err => {
             console.log('error:', err);
@@ -65,9 +87,7 @@ module.exports = (db) => {
           });
 
       });
-
-    })
-
+  })
 
   return router;
 };
