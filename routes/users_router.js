@@ -60,36 +60,36 @@ module.exports = (db) => {
   });
 
   // the post request will change the order_status to 'Cancelled' in the database
-  // router.post("/", (request, response) => {
-  //   const orderId = request.body.order_id;
-  //   const user = request.body.user_id;
-  //   db.query(`
-  //       SELECT id, order_status, user_id
-  //       FROM orders
-  //       WHERE id = ${orderId}
-  //     `)
-  //     .then(data => {
-  //       console.log(data);
-  //       if (data.rows[0].order_status !== 'Pending') {
-  //         response.redirect(`/users/${user}`)
-  //       }
-  //       db.query(`
-  //             UPDATE orders
-  //             SET order_status = 'Cancelled'
-  //             WHERE id = ${orderId}
-  //             RETURNING *;
-  //           `)
-  //         .then(data => {
-  //           response.redirect(`/users/${user}`)
-  //         })
-  //         .catch(err => {
-  //           console.log('error:', err);
-  //           response.status(500)
-  //             .json({ error: err.message });
-  //         });
-  //
-  //     });
-  // })
+  router.post("/cancel", (request, response) => {
+    const orderId = request.body.order_id;
+    const user = request.body.user_id;
+    db.query(`
+        SELECT id, order_status, user_id
+        FROM orders
+        WHERE id = ${orderId}
+      `)
+      .then(data => {
+        console.log(data);
+        if (data.rows[0].order_status !== 'Pending') {
+          response.redirect(`/users/${user}`)
+        }
+        db.query(`
+              UPDATE orders
+              SET order_status = 'Cancelled'
+              WHERE id = ${orderId}
+              RETURNING *;
+            `)
+          .then(data => {
+            response.redirect(`/users/${user}`)
+          })
+          .catch(err => {
+            console.log('error:', err);
+            response.status(500)
+              .json({ error: err.message });
+          });
+
+      });
+  })
 
   return router;
 };
