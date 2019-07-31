@@ -39,7 +39,7 @@ module.exports = (db) => {
   });
 
   // the post request will change the order_status to 'Cancelled' in the database
-  router.post("/", (request, response) => {
+  router.post("/cancel", (request, response) => {
     const orderId = request.body.order_id;
     const user = request.body.user_id;
     db.query(`
@@ -47,7 +47,7 @@ module.exports = (db) => {
       FROM orders
       WHERE id = ${orderId}
       `).then(data => {
-        if (data.rows[0].order_stauts !== 'Pending') {
+        if (data.rows[0].order_status !== 'Pending') {
           return response.redirect(`/users/${user}`)
         }
         db.query(`
