@@ -4,14 +4,27 @@ const { getPendingAndInProgressOrders, getItemsPerOrder, updateOrderStatus, chec
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    // render order status
-    console.log("I HAVE REACHED RESTO page");
 
     getPendingAndInProgressOrders(db)
       .then((orders) => {
         getItemsPerOrder(db)
           .then(items => {
-            res.render("restaurant", { user: true, orders, items });
+            res.render("restaurantCurOrders", { user: true, orders, items });
+          })
+      })
+      .catch(err => {
+        console.log('error:', err);
+        res.status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.get('/order', (req, res) => {
+    getPendingAndInProgressOrders(db)
+      .then((orders) => {
+        getItemsPerOrder(db)
+          .then(items => {
+            res.render("restaurantCurOrders", { user: true, orders, items });
           })
       })
       .catch(err => {
@@ -29,7 +42,6 @@ module.exports = (db) => {
         if (data) {
           updateOrderStatus(db, request)
             .then(() => {
-              console.log('redirect to restaurants ')
               response.redirect("/restaurants")
             })
             .catch(err => {

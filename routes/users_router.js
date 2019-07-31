@@ -19,7 +19,6 @@ module.exports = (db) => {
   // show the current status of user's order
   router.get("/:id", (request, response) => {
     const userId = request.params.id;
-
     queryConfig(db, userId)
       .then(user => {
         if (user) {
@@ -47,26 +46,26 @@ module.exports = (db) => {
       FROM orders
       WHERE id = ${orderId}
       `).then(data => {
-        if (data.rows[0].order_stauts !== 'Pending') {
-          return response.redirect(`/users/${user}`)
-        }
-        db.query(`
+      if (data.rows[0].order_status !== 'Pending') {
+        return response.redirect(`/users/${user}`)
+      }
+      db.query(`
           UPDATE orders
           SET order_status = 'Cancelled'
           WHERE id = ${orderId}
           RETURNING *;
         `).then(data => {
-          response.redirect(`/users/${user}`)
-          })
-          .catch(err => {
-            console.log('error:', err);
-            response.status(500)
-              .json({ error: err.message });
-          });
+        response.redirect(`/users/${user}`)
+      })
+        .catch(err => {
+          console.log('error:', err);
+          response.status(500)
+            .json({ error: err.message });
+        });
 
-      });
+    });
 
-    })
+  })
 
 
   return router;

@@ -9,10 +9,19 @@ th{
   padding: 10px 5px;
   background-color: rgb(227, 239, 250);
   border-bottom-style: ridge;
+  border-left-style: ridge;
+
+}
+
+.statusContainer{
+  border-style: ridge;
+}
+
+.statusDiv{
+  text-align: center;
 }
 
 .col {
-  text-align: center;
   text-align: center;
 }
 
@@ -27,10 +36,12 @@ th{
     border-width: 1px 1 1 1px;
 
     .s {
+      border-style: ridge;
       width: 15%
     }
 
     .m {
+      border-style: ridge;
       width: 40%
     }
   }
