@@ -18,6 +18,7 @@
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/scripts/polling.js"></script>
+  <script type="text/javascript" src="/scripts/disableMessage.js"></script>
 
 </head>
 
@@ -32,84 +33,43 @@
     <table class='order'>
       <thead>
         <tr>
-          <th scope="col">Order</th>
-          <th scope="col">Details</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Status</th>
+          <th scope="col">Order #</th>
+          <th scope="col">Name</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Send Message</th>
           <th scope="col">Next Status</th>
         </tr>
       </thead>
-      <% for(let i = 0; i < orders.length-1; i++) { %>
+      <% for(let i = 0; i < orders.length; i++) { %>
+
       <tbody>
         <tr>
           <!-- ORDER -->
-          <th scope="row"><%=orders[i].order_id%></th>
-          <!-- DISHES -->
+          <th scope="row"><%=orders[i].id%></th>
+          <!-- NAME -->
           <td class='m'>
-            <% for(let z = 0; z < items.length; z++) { %>
-            <%if(items[z].order_id === orders[i].order_id){%>
-            <li class="list-group-item"><%= items[z].dish_name%></li>
-            <%}%>
-          <%}%>
+            <%= orders[i].name %>
           </td>
-          <!-- QUANTITY -->
+          <!-- PHONE -->
           <td class='s'>
-            <% for(let z = 0; z < items.length; z++) { %>
-            <%if(items[z].order_id === orders[i].order_id){%>
-            <li class="list-group-item"><%= items[z].quantity%></li>
-            <%}%>
-                  <%}%>
+            <%= orders[i].phone %>
           </td>
-          <!-- STATUS -->
+          <!-- SEND MESSAGE -->
           <td class='s statusContainer'>
-            <div class='statusDiv'>
-              <%= orders[i].order_status %>
-            </div>
+            <form action="/restaurants/sendMessage" method="POST">
+              <input type=hidden class='sendText' name=sendText value="<%= orders[i].phone %>">
+              <input type=hidden class='userName' name=userName value="<%= orders[i].name %>">
+              <button type="submit" class="btn btn-warning disable">Send</button>
+            </form>
           </td>
           <!-- BUTTON -->
           <td class='s'>
-            <% switch (orders[i].order_status) {
-                  case 'Pending' : %>
-            <form action="/restaurants" method="POST">
-              <input type=hidden class="order-status" name=order_status value="Preparing">
-              <input type=hidden class="current_status" name=current_status value="Pending">
-              <input type=hidden class="order-id" name=order_id value="<%= orders[i].order_id  %>">
-              <button type="submit" class="btn btn-info ">Accept</button>
-            </form>
-            <% break;
-                  case 'Cancelling' : %>
-            <form action="/restaurants" method="POST">
-              <input type=hidden class="order-status" name=order_status value="Preparing">
-              <input type=hidden class="current_status" name=current_status value="Cancelling">
-              <input type=hidden class="order-id" name=order_id value="<%= orders[i].order_id  %>">
-              <button type="submit" class="btn btn-info ">Accept</button>
-            </form>
-            <% break;
-                case 'Preparing' : %>
-            <form action="/restaurants" method="POST">
-              <input type=hidden name=order_status value="Ready">
-              <input type=hidden class="current_status" name=current_status value="Preparing">
-              <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
-              <button type="submit" class="btn btn-primary">Ready</button>
-            </form>
-            <% break;
-              case 'Ready' : %>
-            <form action="/restaurants" method="POST">
+            <form action="/restaurants/pickup" method="POST">
               <input type=hidden name=order_status value="Complete">
               <input type=hidden class="current_status" name=current_status value="Ready">
-              <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
+              <input type=hidden name=order_id value="<%= orders[i].id  %>">
               <button type="submit" class="btn btn-success">Complete</button>
             </form>
-            <% break;
-              case 'Cancelled' : %>
-            <form action="/restaurants" method="POST">
-              <input type=hidden class="current_status" name=current_status value="Cancelled">
-              <input type=hidden name=order_status value="Cancelled">
-              <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
-              <button type="submit" class="btn btn-warning">Accept_Cancellation</button>
-            </form>
-            <% break;
-          } %>
           </td>
         </tr>
       </tbody>

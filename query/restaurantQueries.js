@@ -1,22 +1,17 @@
 const getPendingAndInProgressOrdersQuery = `
-  select orders.id AS order_id, orders.order_status, users.phone, users.name from orders
+  select orders.id AS order_id, orders.order_status from orders
   RIGHT JOIN users ON orders.user_id = users.id
   WHERE LOWER(order_status) = LOWER('Pending')
-  OR LOWER(order_status) = LOWER('Ready')
   OR LOWER(order_status) = LOWER('Preparing')
-  ORDER BY CASE
-  WHEN orders.order_status ='Pending' THEN 1
-  WHEN orders.order_status ='Preparing' THEN 2
-  WHEN orders.order_status ='Ready' THEN 3
-  WHEN orders.order_status ='Complete' THEN 4
-  ELSE 5
-  END;`;
+  OR LOWER(order_status) = LOWER('Cancelling');
+  `;
 
 const getItemsPerOrderQuery = `
   SELECT dishes.name AS dish_name, orders_details.order_id AS order_id, orders_details.quantity AS quantity from orders_details
   JOIN dishes ON orders_details.dish_id = dishes.id
   GROUP BY orders_details.order_id, dishes.name, orders_details.quantity
-  ORDER BY orders_details.order_id;`;
+  ORDER BY orders_details.order_id;
+  `;
 
 const updateOrderStatusQuery =
   `UPDATE orders
@@ -32,6 +27,18 @@ const checkDbQuery = `
   select order_status, id from orders Where id = $1 AND order_status = $2
 `
 
+const getCompletedOrdersQuery = `
+select orders.id AS order_id, orders.order_status, users.phone, users.name from orders
+RIGHT JOIN users ON orders.user_id = users.id
+WHERE LOWER(order_status) = LOWER('Complete');
+`;
+
+
+const getReadyForPickupQuery = `
+SELECT orders.id, users.name, users.phone from orders
+JOIN users ON orders.user_id = users.id
+WHERE orders.order_status = 'Ready';
+`;
 
 function getPendingAndInProgressOrders(db) {
   return db.query(getPendingAndInProgressOrdersQuery).then(ordersFromQuery => {
@@ -43,10 +50,6 @@ function getOrderByOrderId(db, request) {
   const orderId = request.body.orderId;
   const orderStatus = request.body.orderStatus;
   return db.query(getOrderByOrderIdQuery, [orderId]).then(orderFromQuery => {
-    console.log(orderFromQuery.rows, orderStatus)
-    if (orderFromQuery.rows[0].order_status === orderStatus) {
-      console.log('have not cahanged');
-    }
     return (orderFromQuery.rows.length > 0);
   })
 };
@@ -57,11 +60,20 @@ function getItemsPerOrder(db) {
   })
 }
 
-function checkDb(db, data) {
-  return db.query(checkDbQuery, [data[0], data[1]]).then(order => {
-    debugger;
-    return order.rows[0];
+function checkDb(db, request) {
+  const orderId = request.body.order_id;
+  const orderStatus = request.body.current_status;
+  return db.query(checkDbQuery, [orderId, orderStatus]).then(order => {
+    if (order.rows[0]) {
+      return order.rows[0].order_status === orderStatus;
+    } else {
+      return false;
+    }
   })
+    .catch((error) => {
+      console.error(error);
+      return false;
+    })
 }
 
 function updateOrderStatus(db, request) {
@@ -70,10 +82,25 @@ function updateOrderStatus(db, request) {
   return db.query(updateOrderStatusQuery, [newStatus, orderId]);
 }
 
+function getCompletedOrders(db) {
+  return db.query(getCompletedOrdersQuery).then(orders => {
+    return orders.rows;
+  })
+}
+
+
+function getReadyForPickup(db) {
+  return db.query(getReadyForPickupQuery).then(orders => {
+    return orders.rows;
+  })
+}
+
 module.exports = {
   getPendingAndInProgressOrders,
   getItemsPerOrder,
   updateOrderStatus,
   getOrderByOrderId,
-  checkDb
+  checkDb,
+  getCompletedOrders,
+  getReadyForPickup
 }

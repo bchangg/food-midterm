@@ -39,7 +39,7 @@
           <th scope="col">Next Status</th>
         </tr>
       </thead>
-      <% for(let i = 0; i < orders.length-1; i++) { %>
+      <% for(let i = 0; i < orders.length; i++) { %>
       <tbody>
         <tr>
           <!-- ORDER -->
@@ -69,7 +69,7 @@
           <!-- BUTTON -->
           <td class='s'>
             <% switch (orders[i].order_status) {
-                  case 'Pending' : %>
+                case 'Pending' : %>
             <form action="/restaurants" method="POST">
               <input type=hidden class="order-status" name=order_status value="Preparing">
               <input type=hidden class="current_status" name=current_status value="Pending">
@@ -79,10 +79,10 @@
             <% break;
                   case 'Cancelling' : %>
             <form action="/restaurants" method="POST">
-              <input type=hidden class="order-status" name=order_status value="Preparing">
+              <input type=hidden class="order-status" name=order_status value="Cancelled">
               <input type=hidden class="current_status" name=current_status value="Cancelling">
               <input type=hidden class="order-id" name=order_id value="<%= orders[i].order_id  %>">
-              <button type="submit" class="btn btn-info ">Accept</button>
+              <button type="submit" class="btn btn-danger ">Cancel</button>
             </form>
             <% break;
                 case 'Preparing' : %>
@@ -91,22 +91,6 @@
               <input type=hidden class="current_status" name=current_status value="Preparing">
               <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
               <button type="submit" class="btn btn-primary">Ready</button>
-            </form>
-            <% break;
-              case 'Ready' : %>
-            <form action="/restaurants" method="POST">
-              <input type=hidden name=order_status value="Complete">
-              <input type=hidden class="current_status" name=current_status value="Ready">
-              <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
-              <button type="submit" class="btn btn-success">Complete</button>
-            </form>
-            <% break;
-              case 'Cancelled' : %>
-            <form action="/restaurants" method="POST">
-              <input type=hidden class="current_status" name=current_status value="Cancelled">
-              <input type=hidden name=order_status value="Cancelled">
-              <input type=hidden name=order_id value="<%= orders[i].order_id  %>">
-              <button type="submit" class="btn btn-warning">Accept_Cancellation</button>
             </form>
             <% break;
           } %>

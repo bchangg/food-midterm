@@ -51,7 +51,7 @@ module.exports = (db) => {
       }
       db.query(`
           UPDATE orders
-          SET order_status = 'Cancelled'
+          SET order_status = 'Cancelling'
           WHERE id = ${orderId}
           RETURNING *;
         `).then(data => {
