@@ -63,9 +63,9 @@ $(() => {
   };
 
   const renderOrderSlider = function() {
+    let $allSelectDishButtons = $('input.select-dish');
     let $orderTotal = $('#order-total');
-    let $selectDishButton = $('.select-dish');
-    $selectDishButton.click(function(event) {
+    $allSelectDishButtons.click(function(event) {
       const itemName = $(this).parent().parent().parent().children('h2').text();
       const itemQuantity = Number($(this).parent().parent().children('div').children('input').val());
       addItemToOrder(itemName, currentOrder, itemQuantity);
@@ -84,7 +84,6 @@ $(() => {
       $orderPriceSummary.before(createOrderDetailsElement(currentOrder[dishSelection]));
     }
     $('#final-price').text($('#order-total').text());
-    $("input[type='number']").inputSpinner();
   }
 
   const orderDetailsToggler = function() {
@@ -99,19 +98,15 @@ $(() => {
     });
   }
 
-  const loadDishes = function() {
+  const loadPage = function() {
     $.get("/dishes/")
       .then((data) => {
         allDishes = data;
         renderDishes(data)
+        renderOrderSlider();
+        orderDetailsToggler();
         $("input[type='number']").inputSpinner(); // setting plugin for the quantity input thing
       });
-  }
-
-  const loadPage = function() {
-    loadDishes();
-    renderOrderSlider();
-    orderDetailsToggler();
   }
 
   loadPage();
