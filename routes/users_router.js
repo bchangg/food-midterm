@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { seedOrdersTableWithUserId, getUserIdFromName, getNameFromUserId, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
+const { updateOrdersTableWIthTotalPriceTotalDuration, seedOrdersDetailsTableWithCurrentOrderReturningOrderId, seedOrdersTableWithUserIdReturningOrderId, getUserIdFromName, getNameFromUserId, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
 
 module.exports = (db) => {
   router.post('/', (request, response) => {
@@ -14,15 +14,35 @@ module.exports = (db) => {
   });
 
   router.post('/:userName/placeOrder', (request, response) => {
+    const currentOrder = request.body;
+    // use request.body['foodId'] to access the request body
     getUserIdFromName(db, request.params.userName)
       .then((userId) => {
-        if (userId) {
-          return seedOrdersTableWithUserId(db, userId)
-        }
+        // insert into orders table with user id if user exists
+        if (userId)
+          return seedOrdersTableWithUserIdReturningOrderId(db, userId)
       })
-      .then((userAndOrderId) => {
-        // insert into orders table with user id
-        console.log(userAndOrderId);
+      .then((orderId) => {
+        // got the user and order id from orders table, now can seed into orders details with current order object (currentOrder)
+        // insert orderId, dishId, dishQuantity x dishDuration, dishQuantity x dishPrice into orders details
+        let promiseToFindOrderId;
+        for (let dish in currentOrder) {
+          promiseToFindOrderId = seedOrdersDetailsTableWithCurrentOrderReturningOrderId(db,
+            [dish,
+              orderId,
+              currentOrder[dish].quantity * currentOrder[dish].duration,
+              currentOrder[dish].quantity * currentOrder[dish].price,
+              currentOrder[dish].quantity
+            ]);
+        }
+        return promiseToFindOrderId;
+      })
+      .then((queryResponse) => {
+        const orderId = queryResponse.rows[0].order_id;
+        updateOrdersTableWIthTotalPriceTotalDuration(db, orderId);
+      })
+      .catch((error) => {
+        console.error(`query access error`, error.stack);
       })
 
   })

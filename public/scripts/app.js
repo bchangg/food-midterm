@@ -39,7 +39,7 @@ $(() => {
     $placeOrderButton.click(function(event) {
       // post to a route called users/placeOrder with a sql insertion on orders with current user id
       // then do an sql insertion on orders_details with the order details (quantity, )
-      $.post(`/users/${event.currentTarget.value}/placeOrder`)
+      $.post(`/users/${event.currentTarget.value}/placeOrder`, currentOrder)
         .then((data) => {
           console.log(data);
         })
@@ -114,6 +114,7 @@ $(() => {
     $.get("/dishes/")
       .then((data) => {
         allDishes = data;
+        console.log(allDishes);
         renderDishes(data)
         renderOrderSlider();
         orderDetailsToggler();
