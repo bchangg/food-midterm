@@ -28,7 +28,6 @@
     </form>
   </div>
 
-  <% if (status.anonymous) { %>
   <div class="currentOrder">
     <% for (let i of status) { %>
       <% if (i.order_status !== "Completed" && i.order_status !== "Cancelled") { %>
@@ -50,13 +49,13 @@
       <% } %>
     <% } %>
   </div>  <br>
-  <% } else {%>
+  <% if (status == "") {%>
     <div class=status>
       <span class="noOrders">You currently don't have any active orders.</span>
     </div>
   <% } %>
 
-  <% if (status.anonymous) { %>
+
   <% for (let i of status) { %>
   <% if (i.order_status !== "Completed" && i.order_status !== "Cancelled") { %>
   <div class="currentOrderDetail">
@@ -96,7 +95,6 @@
             </tfoot>
     </table>
   </div>
-  <% } %>
   <% } %>
   <% } %>
 
