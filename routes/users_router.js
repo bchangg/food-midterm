@@ -69,12 +69,13 @@ module.exports = (db) => {
     const userId = request.params.id;
     getNameFromUserId(db, userId)
       .then(user => {
+        console.log(`user user user user user`, user)
         if (user) {
           getOrdersPerUser(db, userId)
             .then(orders => {
               getItemsPerUser(db, userId)
                 .then(status => {
-                  response.render("user", { user, orders, status });
+                  response.render("user", { user, userId, orders, status });
                 });
             })
         }
@@ -95,7 +96,7 @@ module.exports = (db) => {
             .then(orders => {
               getItemsPerUser(db, userId)
                 .then(status => {
-                  response.render("user_history", { user, orders, status });
+                  response.render("user_history", { user, userId, orders, status });
                 });
             })
         }
