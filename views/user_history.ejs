@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>User Page</title>
+  <title>User Hisotry Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -18,10 +18,10 @@
   <% include partials/_header %>
   <h1>USER ORDER HISTORY</h1>
   <div class="buttonsss">
-    <form action="/users/<%=status[0].user_id%>" method="GET" style="display: inline;">
+    <form action="/users/<%=userId%>" method="GET" style="display: inline;">
       <button id="current" type="submit" class="btn btn-outline-success">Current Orders</button>
     </form>
-    <form action="/users/<%=status[0].user_id%>/history" method="GET" style="display: inline;">
+    <form action="/users/<%=userId%>/history" method="GET" style="display: inline;">
       <button id="history" type="submit" class="btn btn-outline-info">Order History</button>
     </form>
   </div>
