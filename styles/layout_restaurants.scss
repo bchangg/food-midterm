@@ -1,8 +1,19 @@
 
-
-form{
+.currentOrder .status {
+  border: 2px solid green;
+  border-radius: 20px;
+  width: 60%;
   text-align: center;
-}
+  margin: auto;
+  padding: 10px;
+  margin-bottom: 5px;
+
+    .user_status_text {
+      font-size: 20px;
+      color:rgb(0, 0, 0);
+      margin: 5px;
+      vertical-align: middle
+    }
 
 th{
   text-align: -webkit-center;
@@ -34,6 +45,7 @@ th{
   margin: 1em;
 
   .order {
+    box-sizing: border-box;
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
@@ -51,4 +63,3 @@ th{
     }
   }
 }
-

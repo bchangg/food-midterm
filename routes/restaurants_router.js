@@ -9,7 +9,7 @@ module.exports = (db) => {
       .then((orders) => {
         getItemsPerOrder(db)
           .then(items => {
-            res.render("restaurantCurOrders", { user: true, orders, items });
+            res.render("restaurant", { user: 'Restaurant', orders, items });
           })
       })
       .catch(err => {

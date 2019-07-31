@@ -11,13 +11,12 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app_users_timer.js"></script>
 
 </head>
 
 <body>
   <% include partials/_header %>
-  <h1>USER ORDER STATUS PAGE</h1>
+  <h1>USER ORDER HISTORY</h1>
   <div class="buttonsss">
     <form action="/users/<%=status[0].user_id%>" method="GET" style="display: inline;">
       <button id="current" type="submit" class="btn btn-outline-success">Current Orders</button>
@@ -27,33 +26,9 @@
     </form>
   </div>
 
-  <div class="currentOrder">
-    <% for (let i of status) { %>
-      <% if (i.order_status !== "Completed" || i.order_status !== "Cancelled") { %>
-        <div class=status>
-            <% if (i.order_status === "Preparing") { %>
-              <input type=hidden id="order<%= i.id %>" value="<%= i.id %>">
-              <span class="countDown<%= i.id %>"></span>
-            <% } %>
-            <span class="user_status_text">Order#:<%=i.id %> Status:</span>
-            <span class="user_status_show"><%=i.order_status %></span>
-            <% if (i.order_status === "Pending") { %>
-              <form action="/users/cancel" method="POST" style="display: inline;">
-                <input type=hidden name=user_id value="<%= i.user_id %>">
-                <input type=hidden name=order_id value="<%= i.id %>">
-                <button type="submit" class="btn btn-danger">Cancel</button>
-              </form>
-            <% } %>
-        </div>
-      <% } %>
-    <% } %>
-  </div>  <br>
-
   <% for (let i of status) { %>
-  <% if (i.order_status !== "Completed" || i.order_status !== "Cancelled") { %>
-  <div class="currentOrderDetail">
-    <% console.log(Date(i.created_at)) %>
-    Current Order Detail (Order#:<%=i.id %> Date created: <%=new Date(i.created_at) %>)
+  <% if (i.order_status === "Completed" || i.order_status === "Cancelled") { %>
+  <div class="currentOrderDetail">Current Order Detail (Order#:<%=i.id %> Date created: <%=new Date(i.created_at) %>)
     <table class="orderDetail">
       <thead>
         <th scope="col" id="tc">Name</th>
@@ -64,28 +39,28 @@
       </thead>
       <tbody>
         <% let total = 0 %>
-          <% for (let order of orders) { %>
-            <% if (order.order_id === i.id) { %>
-              <tr>
-                <td class='s' id="tc"><%=order.name %></td>
-                <td class='s'><img src=<%=order.imgurl %> height='100px'></td>
-                <td class='m'><%=order.description %></td>
-                <td class='s'><%=order.quantity %></td>
-                <td class='s'><%=order.order_price%></td>
-              </tr>
-              <% total += order.order_price %>
-            <% } %>
+        <% for (let order of orders) { %>
+          <% if (order.order_id === i.id) { %>
+            <tr>
+              <td class='s' id="tc"><%=order.name %></td>
+              <td class='s'><img src=<%=order.imgurl %> height='100px'></td>
+              <td class='m'><%=order.description %></td>
+              <td class='s'><%=order.quantity %></td>
+              <td class='s'><%=order.order_price%></td>
+            </tr>
+            <% total += order.order_price %>
           <% } %>
-        </tbody>
-            <tfoot>
-              <tr>
-                <td>Status:</td>
-                <td class="user_status_show"><%=i.order_status %></td>
-                <td></td>
-                <td>Total Price:</td>
-                <td><%=total %></td>
-              </tr>
-            </tfoot>
+        <% } %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Status:</td>
+          <td class="user_status_show"><%=i.order_status %></td>
+          <td></td>
+          <td>Total Price:</td>
+          <td><%=total %></td>
+        </tr>
+      </tfoot>
     </table>
   </div>
   <% } %>
