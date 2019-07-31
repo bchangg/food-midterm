@@ -1,20 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getNameFromUserId, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
+const { updateOrdersTableWIthTotalPriceTotalDuration, seedOrdersDetailsTableWithCurrentOrderReturningOrderId, seedOrdersTableWithUserIdReturningOrderId, getUserIdFromName, getNameFromUserId, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
 
 module.exports = (db) => {
   router.post('/', (request, response) => {
-    const username = request.body.currentUsername;
-    const queryConfig = {
-      text: `
-          SELECT id
-          FROM users
-          WHERE name = $1;
-        `,
-      values: [username]
-    }
-
-    db.query(queryConfig)
+    getUserIdFromName(db, [request.body.currentUsername])
       .then((queryResponse) => {
         response.redirect(`/users/${queryResponse.rows[0].id}`);
       })
@@ -23,9 +13,46 @@ module.exports = (db) => {
       });
   });
 
+  router.post('/:userName/placeOrder', (request, response) => {
+    const currentOrder = request.body;
+    console.log(currentOrder);
+    let currentUserId;
+    // use request.body['foodId'] to access the request body
+    getUserIdFromName(db, request.params.userName)
+      .then((userId) => {
+        // insert into orders table with user id if user exists
+        if (userId) {
+          currentUserId = userId;
+          return seedOrdersTableWithUserIdReturningOrderId(db, userId)
+        }
+      })
+      .then((orderId) => {
+        // got the user and order id from orders table, now can seed into orders details with current order object (currentOrder)
+        // insert orderId, dishId, dishQuantity x dishDuration, dishQuantity x dishPrice into orders details
+        let promiseToFindOrderId;
+        for (let dish in currentOrder) {
+          promiseToFindOrderId = seedOrdersDetailsTableWithCurrentOrderReturningOrderId(db,
+            [dish,
+              orderId,
+              currentOrder[dish].quantity * currentOrder[dish].duration,
+              currentOrder[dish].quantity * currentOrder[dish].price,
+              currentOrder[dish].quantity
+            ]);
+        }
+        return promiseToFindOrderId;
+      })
+      .then((queryResponse) => {
+        updateOrdersTableWIthTotalPriceTotalDuration(db, queryResponse.rows[0].order_id);
+        response.send(`/users/${currentUserId}`);
+      })
+      .catch((error) => {
+        console.error(`query access error`, error.stack);
+      })
+
+  })
+
   //coundown timer
   router.get("/", (request, response) => {
-    console.log('entered users/ route');
     db.query(`
       SELECT order_id, orders.created_at, sum(order_duration)
       FROM orders_details JOIN orders ON orders.id = order_id
@@ -84,10 +111,11 @@ module.exports = (db) => {
     const orderId = request.body.order_id;
     const user = request.body.user_id;
     db.query(`
-      SELECT id, order_status, user_id
-      FROM orders
-      WHERE id = ${orderId}
-      `).then(data => {
+        SELECT id, order_status, user_id
+        FROM orders
+        WHERE id = ${orderId}
+      `)
+      .then(data => {
         if (data.rows[0].order_status !== 'Pending') {
           return response.redirect(`/users/${user}`)
         }

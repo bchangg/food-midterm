@@ -23,7 +23,7 @@ $(() => {
         <p>${dish.description}</p>
         <div class="quantity-and-price d-flex flex-row justify-content-between align-items-center">
           <div>
-            <input type="number" value="0" min="0" max="100" step="1"/>
+            <input type="number" value="1" min="0" max="100" step="1"/>
           </div>
           <div class="d-flex flex-column justify-content-start align-items-center">
             <label for="select">$${dish.price / 100}</label>
@@ -33,6 +33,35 @@ $(() => {
       </article>
     `;
   };
+
+  const submitOrderToDatabase = function() {
+    const $placeOrderButton = $('#place-order');
+    $placeOrderButton.click(function(event) {
+      // post to a route called users/placeOrder with a sql insertion on orders with current user id
+      // then do an sql insertion on orders_details with the order details (quantity, )
+      console.log(currentOrder);
+      $.post(`/users/${event.currentTarget.value}/placeOrder`, currentOrder)
+        .then((response) => {
+          if(response) {
+            window.location.href = response;
+          } else {
+            window.location.href = '/';
+          }
+        });
+    });
+  }
+
+  const orderDetailsToggler = function() {
+    const $checkoutButton = $('#checkout');
+    const $closeButton = $('#close');
+    $checkoutButton.click(function(event) {
+      renderOrderDetails();
+      $('.order-details-container').css("display", "block");
+    });
+    $closeButton.click(function(event) {
+      $('.order-details-container').css("display", "none");
+    });
+  }
 
   const addItemToOrder = function(selectedDish, currentOrderInfo, dishQuantity) {
     const selectedDishObject = function() {
@@ -86,28 +115,18 @@ $(() => {
     $('#final-price').text($('#order-total').text());
   }
 
-  const orderDetailsToggler = function() {
-    const $checkoutButton = $('#checkout');
-    const $closeButton = $('#close');
-    $checkoutButton.click(function(event) {
-      renderOrderDetails();
-      $('.order-details-container').css("display", "block");
-    });
-    $closeButton.click(function(event) {
-      $('.order-details-container').css("display", "none");
-    });
-  }
-
-  const loadPage = function() {
+  const loadPageFunctions = function() {
     $.get("/dishes/")
       .then((data) => {
         allDishes = data;
+        console.log(allDishes);
         renderDishes(data)
         renderOrderSlider();
         orderDetailsToggler();
+        submitOrderToDatabase();
         $("input[type='number']").inputSpinner(); // setting plugin for the quantity input thing
       });
   }
 
-  loadPage();
+  loadPageFunctions();
 });

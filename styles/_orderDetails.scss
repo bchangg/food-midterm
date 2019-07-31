@@ -6,12 +6,13 @@ div.order-details-container {
   height: 100%;
   padding: 10rem;
   top: 0;
+  z-index: 500;
 
   #close {
     position: absolute;
     top: 11rem;
     right: 11rem;
-    z-index: 1;
+    z-index: 501;
   }
 
   .order-details {
