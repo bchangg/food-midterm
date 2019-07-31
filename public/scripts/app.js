@@ -119,7 +119,6 @@ $(() => {
     $.get("/dishes/")
       .then((data) => {
         allDishes = data;
-        console.log(allDishes);
         renderDishes(data)
         renderOrderSlider();
         orderDetailsToggler();

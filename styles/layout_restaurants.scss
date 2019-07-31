@@ -1,39 +1,24 @@
-
-.currentOrder .status {
-  border: 2px solid green;
-  border-radius: 20px;
-  width: 60%;
+form {
   text-align: center;
-  margin: auto;
-  padding: 10px;
-  margin-bottom: 5px;
+}
 
-    .user_status_text {
-      font-size: 20px;
-      color:rgb(0, 0, 0);
-      margin: 5px;
-      vertical-align: middle
-    }
-
-th{
+th {
   text-align: -webkit-center;
   padding: 10px 5px;
   background-color: rgb(227, 239, 250);
   border-bottom-style: ridge;
   border-left-style: ridge;
-
 }
 
-.buttons{
+.buttons {
   display: inline;
 }
 
-
-.statusContainer{
+.statusContainer {
   border-style: ridge;
 }
 
-.statusDiv{
+.statusDiv {
   text-align: center;
 }
 
@@ -45,7 +30,6 @@ th{
   margin: 1em;
 
   .order {
-    box-sizing: border-box;
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
@@ -54,12 +38,12 @@ th{
 
     .s {
       border-style: ridge;
-      width: 15%
+      width: 15%;
     }
 
     .m {
       border-style: ridge;
-      width: 40%
+      width: 40%;
     }
   }
 }

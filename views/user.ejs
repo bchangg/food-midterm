@@ -19,6 +19,7 @@
   <% include partials/_header %>
   <h1>USER ORDER STATUS PAGE</h1>
   <div class="buttonsss">
+    <% console.log(status) %>
     <form action="/users/<%=status[0].user_id%>" method="GET" style="display: inline;">
       <button id="current" type="submit" class="btn btn-outline-success">Current Orders</button>
     </form>

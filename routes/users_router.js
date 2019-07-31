@@ -4,9 +4,9 @@ const { updateOrdersTableWIthTotalPriceTotalDuration, seedOrdersDetailsTableWith
 
 module.exports = (db) => {
   router.post('/', (request, response) => {
-    getUserIdFromName(db, [request.body.currentUsername])
+    getUserIdFromName(db, request)
       .then((queryResponse) => {
-        response.redirect(`/users/${queryResponse.rows[0].id}`);
+        response.redirect(`/users/${queryResponse}`);
       })
       .catch((error) => {
         response.redirect('/');
@@ -15,7 +15,6 @@ module.exports = (db) => {
 
   router.post('/:userName/placeOrder', (request, response) => {
     const currentOrder = request.body;
-    console.log(currentOrder);
     let currentUserId;
     // use request.body['foodId'] to access the request body
     getUserIdFromName(db, request.params.userName)
