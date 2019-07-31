@@ -98,6 +98,7 @@ $(() => {
       const itemName = $(this).parent().parent().parent().children('h2').text();
       const itemQuantity = Number($(this).parent().parent().children('div').children('input').val());
       addItemToOrder(itemName, currentOrder, itemQuantity);
+      console.log(currentOrder);
       let currentTotal = 0;
       for (let dish in currentOrder) {
         currentTotal += Number((currentOrder[dish].price * currentOrder[dish].quantity));
