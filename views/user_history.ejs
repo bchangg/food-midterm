@@ -28,7 +28,8 @@
   </div>
 
   <% for (let i of status) { %>
-  <div class="currentOrderDetail">Current Order Detail (Order#:<%=i.id %>)
+  <% if (i.order_status === "Complete" || i.order_status === "Cancellation_Accepted") { %>
+  <div class="currentOrderDetail">Current Order Detail (Order#:<%=i.id %> Date created: <%=new Date(i.created_at) %>)
     <table class="orderDetail">
       <thead>
         <th scope="col" id="tc">Name</th>
@@ -63,6 +64,7 @@
       </tfoot>
     </table>
   </div>
+  <% } %>
   <% } %>
 
 
