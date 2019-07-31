@@ -1,20 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getNameFromUserId, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
+const { seedOrdersTableWithUserId, getUserIdFromName, getNameFromUserId, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
 
 module.exports = (db) => {
   router.post('/', (request, response) => {
-    const username = request.body.currentUsername;
-    const queryConfig = {
-      text: `
-          SELECT id
-          FROM users
-          WHERE name = $1;
-        `,
-      values: [username]
-    }
-
-    db.query(queryConfig)
+    getUserIdFromName(db, [request.body.currentUsername])
       .then((queryResponse) => {
         response.redirect(`/users/${queryResponse.rows[0].id}`);
       })
@@ -22,6 +12,20 @@ module.exports = (db) => {
         response.redirect('/');
       });
   });
+
+  router.post('/:userName/placeOrder', (request, response) => {
+    getUserIdFromName(db, request.params.userName)
+      .then((userId) => {
+        if (userId) {
+          return seedOrdersTableWithUserId(db, userId)
+        }
+      })
+      .then((userAndOrderId) => {
+        // insert into orders table with user id
+        console.log(userAndOrderId);
+      })
+
+  })
 
   //coundown timer
   router.get("/", (request, response) => {

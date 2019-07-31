@@ -1,3 +1,6 @@
+const getIdFromUserNameQuery =
+  `SELECT id FROM users WHERE name = $1`;
+
 const getNameFromUserIdQuery =
   `SELECT name FROM users WHERE id = $1`;
 
@@ -12,6 +15,27 @@ const getItemsPerUserQuery = `
   FROM orders
   WHERE user_id = $1;
 `;
+
+const seedOrdersTableWithUserIdQuery = `
+  INSERT INTO orders (user_id)
+  VALUES ($1)
+  RETURNING id AS order_id, user_id AS user_id;
+`;
+
+function seedOrdersTableWithUserId(db, userId) {
+  return db.query(seedOrdersTableWithUserIdQuery, [userId])
+    .then((data) => {
+      console.log(data.rows);
+      return data.rows;
+    })
+}
+
+function getUserIdFromName(db, userName) {
+  return db.query(getIdFromUserNameQuery, [userName])
+    .then((data) => {
+      return data.rows[0].id;
+    })
+}
 
 function getNameFromUserId(db, userData) {
   return db.query(getNameFromUserIdQuery, [userData])
@@ -35,6 +59,8 @@ function getItemsPerUser(db, userId) {
 };
 
 module.exports = {
+  seedOrdersTableWithUserId,
+  getUserIdFromName,
   getNameFromUserId,
   getOrdersPerUser,
   getItemsPerUser
