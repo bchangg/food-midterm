@@ -58,24 +58,42 @@ module.exports = (db) => {
         reponse.redirect(`/`);
       });
   });
+  // show user's order history
+  router.get("/:id/history", (request, response) => {
+    const userId = request.params.id;
 
-  // the post request will change the order_status to 'Cancelled' in the database
+    getNameFromUserId(db, userId)
+      .then(user => {
+        if (user) {
+          getOrdersPerUser(db, userId)
+            .then(orders => {
+              getItemsPerUser(db, userId)
+                .then(status => {
+                  response.render("user_history", { user, orders, status });
+                });
+            })
+        }
+      })
+      .catch((error) => {
+        console.error(`query error on order retrieval`, error.stack);
+        reponse.redirect(`/`);
+      });
+  });
+  // the post request will change the order_status to 'Cancelling' in the database
   router.post("/cancel", (request, response) => {
     const orderId = request.body.order_id;
     const user = request.body.user_id;
     db.query(`
-        SELECT id, order_status, user_id
-        FROM orders
-        WHERE id = ${orderId}
-      `)
-      .then(data => {
-        console.log(data);
+      SELECT id, order_status, user_id
+      FROM orders
+      WHERE id = ${orderId}
+      `).then(data => {
         if (data.rows[0].order_status !== 'Pending') {
-          response.redirect(`/users/${user}`)
+          return response.redirect(`/users/${user}`)
         }
         db.query(`
               UPDATE orders
-              SET order_status = 'Cancelled'
+              SET order_status = 'Cancelling'
               WHERE id = ${orderId}
               RETURNING *;
             `)

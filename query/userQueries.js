@@ -8,7 +8,7 @@ const getOrdersPerUserQuery = `
   WHERE user_id = $1;
 `;
 const getItemsPerUserQuery = `
-  SELECT id, order_status, user_id
+  SELECT *
   FROM orders
   WHERE user_id = $1;
 `;
