@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { sendMessage } = require('../twilio/send_sms');
-const { getPendingAndInProgressOrders, getItemsPerOrder, updateOrderStatus, checkDb, getCompletedOrders, getReadyForPickup } = require('../query/restaurantQueries');
+const { getPendingAndInProgressOrders, getItemsPerOrder, updateOrderStatus, checkDb, getCompletedAndCancelledOrders, getReadyForPickup } = require('../query/restaurantQueries');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -21,7 +21,7 @@ module.exports = (db) => {
 
   router.get('/complete', (req, res) => {
     console.log('complete');
-    getCompletedOrders(db)
+    getCompletedAndCancelledOrders(db)
       .then((orders) => {
         getItemsPerOrder(db)
           .then(items => {
