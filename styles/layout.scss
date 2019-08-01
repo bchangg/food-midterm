@@ -31,10 +31,9 @@ body {
   }
 
   main {
-    background: #6d86e0;
+    // background: #6d86e0;
     width: 70vw;
-    margin: 1rem auto 3rem;
-    padding: 0 auto;
+    margin: 1rem auto;
 
     @import 'menu';
     @import 'orderSlider';

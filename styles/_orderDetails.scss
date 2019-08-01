@@ -39,15 +39,15 @@ div.order-details-container {
       margin: 1rem;
       word-break: break-all;
 
-      span {
+      > span {
         max-width: 40vw;
       }
-    }
 
-    .details {
-      .input-group {
-        max-width: 100%;
-        width: 60%;
+      .details {
+        .input-group {
+          max-width: 100%;
+          width: 60%;
+        }
       }
     }
 

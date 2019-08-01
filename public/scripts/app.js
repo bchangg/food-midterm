@@ -15,10 +15,16 @@ $(() => {
   }
 
   const createDishElement = function(dish) {
+    console.log(dish);
     return `
       <article class="d-flex flex-column m-2">
-        <h2>${dish.name}</h2>
-        <p>${dish.description}</p>
+        <div class="description d-flex flex-row justify-content-between align-items-center">
+          <div class="d-flex flex-column">
+            <h2>${dish.name}</h2>
+            <p>${dish.description}</p>
+          </div>
+          <img class="img-fluid" src="${dish.imgurl}" alt="${dish.name}">
+        </div>
         <div class="quantity-and-price d-flex flex-row justify-content-between align-items-center">
           <div>
             <input type="number" value="1" min="0" max="100" step="1"/>
