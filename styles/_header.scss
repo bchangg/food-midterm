@@ -1,0 +1,44 @@
+.top-bar {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  width: 100%;
+  float: none;
+  height: 4.4125rem;
+  line-height: 4.4125rem;
+  overflow: visible;
+  position: fixed;
+  display: block;
+  box-sizing: inherit;
+  opacity: 0.8;
+  background-color: rgb(250, 250, 250);
+  z-index: 99;
+
+  .half-circle-outside-wrap {
+    transition: all .3s ease-in-out;
+    height: 5.1375rem;
+    left: .525rem;
+    overflow: hidden;
+    position: absolute;
+    top: 4.5rem;
+}
+
+  #icon {
+    height: 150px;
+    opacity: 1;
+    float: left;
+    margin-left: 1em;
+  }
+
+  #navButtons {
+    opacity: 1;
+    margin-left: 1em;
+  }
+
+  form {
+    display: inline;
+  }
+}
+
+.top-bar .half-circle-outside-wrap .half-circle-inside-wrap {
+  background-color: rgba(253,250,246,.65);
+}

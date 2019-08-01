@@ -1,4 +1,5 @@
 // See: https://sass-lang.com/
+@import 'header';
 
 body {
   background-color: #9ca19c;
@@ -22,6 +23,7 @@ body {
     width: 70vw;
     margin: 1rem auto 3rem;
     padding: 0 auto;
+
     @import 'menu';
     @import 'orderSlider';
   }
