@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { updateOrdersTableWIthTotalPriceTotalDuration, seedOrdersDetailsTableWithCurrentOrderReturningOrderId, seedOrdersTableWithUserIdReturningOrderId, getUserIdFromName, getNameFromUserId, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
 
-module.exports = (db) => {
+module.exports = (db, io) => {
   router.post('/', (request, response) => {
     getUserIdFromName(db, request.body.currentUsername)
       .then((queryResponse) => {
@@ -39,6 +39,7 @@ module.exports = (db) => {
               currentOrder[dish].quantity
             ]);
         }
+        io.emit('updateOrders', { for: 'everyone' });
         return promiseToFindOrderId;
       })
       .then((queryResponse) => {
@@ -110,8 +111,8 @@ module.exports = (db) => {
   router.post("/cancel", (request, response) => {
     const orderId = request.body.order_id;
     const user = request.body.user_id;
-    db.query(`
 
+    db.query(`
         SELECT id, order_status, user_id
         FROM orders
         WHERE id = ${orderId}
@@ -127,6 +128,7 @@ module.exports = (db) => {
               RETURNING *;
             `)
           .then(data => {
+            io.emit('updateStatusFieldAfterCancel', { for: 'everyone' });
             response.redirect(`/users/${user}`)
           })
           .catch(err => {

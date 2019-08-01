@@ -9,12 +9,13 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout_users.css" type="text/css" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app_users_timer.js"></script>
+  <script type="text/javascript" src="/scripts/restaurant_events.js"></script>
   <script type="text/javascript" src="/scripts/animation.js"></script>
-
 </head>
 
 <body>
@@ -25,7 +26,7 @@
 
   <div class="buttonsss">
     <% console.log(userId) %>
-    <form action="/users/<%=userId%>" method="GET" style="display: inline;">
+    <form action="/users/<%=userId%>" class='formContainingPost' method="GET" style="display: inline;">
       <button id="current" type="submit" class="btn btn-outline-success">Current Orders</button>
     </form>
     <form action="/users/<%=userId%>/history" method="GET" style="display: inline;">
@@ -35,29 +36,29 @@
 
   <div class="currentOrder">
     <% for (let i of status) { %>
-      <% if (i.order_status !== "Completed" && i.order_status !== "Cancelled") { %>
-        <div class=status>
-            <% if (i.order_status === "Preparing") { %>
-              <input type=hidden id="order<%= i.id %>" value="<%= i.id %>">
-              <span class="countDown<%= i.id %>"></span>
-            <% } %>
-            <span class="user_status_text">Order#:<%=i.id %> Status:</span>
-            <span class="user_status_show"><%=i.order_status %></span>
-            <% if (i.order_status === "Pending") { %>
-              <form action="/users/cancel" method="POST" style="display: inline;">
-                <input type=hidden name=user_id value="<%= i.user_id %>">
-                <input type=hidden name=order_id value="<%= i.id %>">
-                <button type="submit" class="btn btn-danger">Cancel</button>
-              </form>
-            <% } %>
-        </div>
-      <% } %>
-    <% } %>
-  </div>  <br>
-  <% if (status == "") {%>
+    <% if (i.order_status !== "Completed" && i.order_status !== "Cancelled") { %>
     <div class=status>
-      <span class="noOrders">You currently don't have any active orders.</span>
+      <% if (i.order_status === "Preparing") { %>
+      <input type=hidden id="order<%= i.id %>" value="<%= i.id %>">
+      <span class="countDown<%= i.id %>"></span>
+      <% } %>
+      <span class="user_status_text">Order#:<%=i.id %> Status:</span>
+      <span class="user_status_show"><%=i.order_status %></span>
+      <% if (i.order_status === "Pending") { %>
+      <form action="/users/cancel" method="POST" style="display: inline;">
+        <input type=hidden name=user_id value="<%= i.user_id %>">
+        <input type=hidden name=order_id value="<%= i.id %>">
+        <button type="submit" class="btn btn-danger">Cancel</button>
+      </form>
+      <% } %>
     </div>
+    <% } %>
+    <% } %>
+  </div> <br>
+  <% if (status == "") {%>
+  <div class=status>
+    <span class="noOrders">You currently don't have any active orders.</span>
+  </div>
   <% } %>
 
 
@@ -76,28 +77,28 @@
       </thead>
       <tbody>
         <% let total = 0 %>
-          <% for (let order of orders) { %>
-            <% if (order.order_id === i.id) { %>
-              <tr>
-                <td class='s' id="tc"><%=order.name %></td>
-                <td class='s'><img src=<%=order.imgurl %> height='100px'></td>
-                <td class='m'><%=order.description %></td>
-                <td class='s'><%=order.quantity %></td>
-                <td class='s'><%=order.order_price%></td>
-              </tr>
-              <% total += order.order_price %>
-            <% } %>
-          <% } %>
-        </tbody>
-            <tfoot>
-              <tr>
-                <td>Status:</td>
-                <td class="user_status_show"><%=i.order_status %></td>
-                <td></td>
-                <td>Total Price:</td>
-                <td><%=total %></td>
-              </tr>
-            </tfoot>
+        <% for (let order of orders) { %>
+        <% if (order.order_id === i.id) { %>
+        <tr>
+          <td class='s' id="tc"><%=order.name %></td>
+          <td class='s'><img src=<%=order.imgurl %> height='100px'></td>
+          <td class='m'><%=order.description %></td>
+          <td class='s'><%=order.quantity %></td>
+          <td class='s'><%=order.order_price%></td>
+        </tr>
+        <% total += order.order_price %>
+        <% } %>
+        <% } %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Status:</td>
+          <td class="user_status_show"><%=i.order_status %></td>
+          <td></td>
+          <td>Total Price:</td>
+          <td><%=total %></td>
+        </tr>
+      </tfoot>
     </table>
   </div>
   <% } %>
@@ -105,9 +106,12 @@
 
 
 </body>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script type="text/javascript" src="/scripts/app.js"></script>
 
 </html>
