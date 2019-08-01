@@ -32,7 +32,7 @@ select orders.id AS order_id, orders.order_status AS order_status, users.phone A
 orders.created_at AS date
 from orders
 RIGHT JOIN users ON orders.user_id = users.id
-WHERE LOWER(order_status) = LOWER('Complete') OR
+WHERE LOWER(order_status) = LOWER('Completed') OR
 LOWER(order_status) = LOWER('Cancelled');
 `;
 
