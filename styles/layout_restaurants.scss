@@ -10,8 +10,12 @@ th {
   border-left-style: ridge;
 }
 
-.buttons {
-  display: inline;
+.buttonsss {
+  text-align: center;
+  margin: auto;
+  .buttons {
+    display: inline;
+  }
 }
 
 .statusContainer {

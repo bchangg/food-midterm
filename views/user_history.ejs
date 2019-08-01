@@ -16,7 +16,11 @@
 
 <body>
   <% include partials/_header %>
-  <h1>USER ORDER HISTORY</h1>
+  <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center pl-5 my-0">
+    <h1>Order History</h1>
+  </div>
+  <br>
+
   <div class="buttonsss">
     <form action="/users/<%=userId%>" method="GET" style="display: inline;">
       <button id="current" type="submit" class="btn btn-outline-success">Current Orders</button>

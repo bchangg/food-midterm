@@ -17,7 +17,11 @@
 
 <body>
   <% include partials/_header %>
-  <h1>USER ORDER STATUS PAGE</h1>
+  <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center pl-5 my-0">
+    <h1>Order Status</h1>
+  </div>
+  <br>
+
   <div class="buttonsss">
     <% console.log(userId) %>
     <form action="/users/<%=userId%>" method="GET" style="display: inline;">
