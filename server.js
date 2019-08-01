@@ -11,12 +11,18 @@ const app = express();
 const morgan = require('morgan');
 const cookieSession = require("cookie-session");
 
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+
+
 
 // PG database client/connection setup
 const { Pool } = require('pg');
 const dbParams = require('./lib/db.js');
 const db = new Pool(dbParams);
 db.connect();
+
+
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -45,10 +51,12 @@ const dishesRoutes = require("./routes/dishes_router");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/users", usersRoutes(db));
-app.use("/restaurants", restaurantsRoutes(db));
+app.use("/users", usersRoutes(db, io));
+app.use("/restaurants", restaurantsRoutes(db, io));
 app.use("/dishes", dishesRoutes(db));
 // Note: mount other resources here, using the same pattern above
+
+
 
 
 // Home page
@@ -106,9 +114,13 @@ app.post("/logout", (request, response) => {
   response.redirect("/");
 });
 
+io.on('connection', function(socket) {
+  console.log('a user connected');
+});
+
 // /logout
 // empty cookies and redirect to /
 
-app.listen(PORT, () => {
+http.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
