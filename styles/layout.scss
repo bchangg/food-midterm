@@ -4,8 +4,19 @@
 body {
   background-color: #9ca19c;
 
-  .jumbotron {
-    background-image: url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+  #imgMain {
+    background-image: url("/images/main.jpeg");
+  }
+
+  #imgUser {
+    background-image: url("/images/user.jpg");
+  }
+
+  #imgRestaurant {
+    background-image: url("/images/restuarant.jpeg");
+  }
+
+  #imgMain, #imgUser, #imgRestaurant {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
