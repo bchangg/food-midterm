@@ -98,8 +98,8 @@ $(() => {
     $allSelectDishButtons.click(function(event) {
       clearInterval(itemTimeout);
       const itemName = $(this).parent().parent().parent().children('h2').text();
-      const itemQuantity = Number($(this).parent().parent().children('div').children('input').val());
-      addItemToOrder(itemName, currentOrder, itemQuantity);
+      const itemQuantity = $(this).parent().parent().children('div').children('input');
+      addItemToOrder(itemName, currentOrder, Number(itemQuantity.val()));
       let currentTotal = 0;
       for (let dish in currentOrder) {
         currentTotal += Number((currentOrder[dish].price * currentOrder[dish].quantity));
@@ -109,6 +109,7 @@ $(() => {
       itemTimeout = setTimeout(() => {
         $orderSlider.children('.order-item').remove();
       }, 1500);
+      $(itemQuantity[0]).val('1');
     });
   }
 
@@ -129,6 +130,7 @@ $(() => {
       }
       $('#final-price').text(`$${currentTotal/100}`);
     })
+    $("input[name='decidingQuantity']").inputSpinner(); // setting plugin for the quantity input thing
     $('#final-price').text($('#order-total').text());
   }
 

@@ -18,3 +18,15 @@ VALUES ('Banana Bread', 'Because we also sell home baked goods apparently', 500,
 INSERT INTO dishes (name, description, price, imgUrl, duration)
 VALUES ('m&ms', 'We sell EVERYTHING', 100,
 '/images/M&Ms.jpeg', 30);
+INSERT INTO dishes (name, description, price, imgUrl, duration)
+VALUES ('a', 'We sell EVERYTHING', 100,
+'/images/M&Ms.jpeg', 30);
+INSERT INTO dishes (name, description, price, imgUrl, duration)
+VALUES ('b', 'We sell EVERYTHING', 100,
+'/images/M&Ms.jpeg', 30);
+INSERT INTO dishes (name, description, price, imgUrl, duration)
+VALUES ('c', 'We sell EVERYTHING', 100,
+'/images/M&Ms.jpeg', 30);
+INSERT INTO dishes (name, description, price, imgUrl, duration)
+VALUES ('d', 'We sell EVERYTHING', 100,
+'/images/M&Ms.jpeg', 30);
