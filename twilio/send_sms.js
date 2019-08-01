@@ -10,7 +10,7 @@ function sendMessage(messageData) {
     Thanks for ordering with LightResto.
     Your food is ready for pickup`,
     from: fromPhone,
-    to: `+1${messageData.body.sendText}`
+    to: `${messageData.body.sendText}`
   })
 }
 
