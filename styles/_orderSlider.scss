@@ -4,8 +4,19 @@
   bottom: 8vh;
   right: 17vw;
   padding: 1rem;
+  max-height: 25vh;
+  overflow-y: auto;
   @media all and (max-width: 1024px) {
     right: 5vw;
-    bottom: 8vh;
+  }
+
+  .order-items {
+    border: 1px solid black;
+    padding: 0.2rem;
+    margin: 0.1rem;
+    width: 100%;
+  }
+
+  input#checkout {
   }
 }
