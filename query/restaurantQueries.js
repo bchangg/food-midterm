@@ -27,10 +27,13 @@ const checkDbQuery = `
   select order_status, id from orders Where id = $1 AND order_status = $2
 `
 
-const getCompletedOrdersQuery = `
-select orders.id AS order_id, orders.order_status, users.phone, users.name from orders
+const getCompletedAndCancelledOrdersQuery = `
+select orders.id AS order_id, orders.order_status AS order_status, users.phone AS phone, users.id, orders.total_price AS total_price,
+orders.created_at AS date
+from orders
 RIGHT JOIN users ON orders.user_id = users.id
-WHERE LOWER(order_status) = LOWER('Complete');
+WHERE LOWER(order_status) = LOWER('Completed') OR
+LOWER(order_status) = LOWER('Cancelled');
 `;
 
 
@@ -82,8 +85,8 @@ function updateOrderStatus(db, request) {
   return db.query(updateOrderStatusQuery, [newStatus, orderId]);
 }
 
-function getCompletedOrders(db) {
-  return db.query(getCompletedOrdersQuery).then(orders => {
+function getCompletedAndCancelledOrders(db) {
+  return db.query(getCompletedAndCancelledOrdersQuery).then(orders => {
     return orders.rows;
   })
 }
@@ -101,6 +104,6 @@ module.exports = {
   updateOrderStatus,
   getOrderByOrderId,
   checkDb,
-  getCompletedOrders,
+  getCompletedAndCancelledOrders,
   getReadyForPickup
 }

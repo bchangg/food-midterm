@@ -8,8 +8,6 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-
-
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -40,35 +38,28 @@
         </tr>
       </thead>
       <% for(let i = 0; i < orders.length; i++) { %>
+
       <tbody>
         <tr>
-          <!-- ORDER -->
+          <!-- ORDER #-->
           <th scope="row"><%=orders[i].order_id%></th>
-          <!-- DISHES -->
+          <!-- Customer's ID-->
           <td class='m'>
-            <% for(let z = 0; z < items.length; z++) { %>
-            <%if(items[z].order_id === orders[i].order_id){%>
-            <li class="list-group-item"><%= items[z].dish_name%></li>
-            <%}%>
-          <%}%>
+            <%= orders[i].id%>
           </td>
-          <!-- QUANTITY -->
+          <!-- Pice -->
           <td class='s'>
-            <% for(let z = 0; z < items.length; z++) { %>
-            <%if(items[z].order_id === orders[i].order_id){%>
-            <li class="list-group-item"><%= items[z].quantity%></li>
-            <%}%>
-                  <%}%>
+            <%= orders[i].total_price %>
           </td>
-          <!-- STATUS -->
+          <!-- Date -->
           <td class='s statusContainer'>
             <div class='statusDiv'>
-              <%= orders[i].order_status %>
+              <%= orders[i].date %>
             </div>
           </td>
-          <!-- BUTTON -->
+          <!-- Status -->
           <td class='s'>
-
+            <%= orders[i].order_status %>
           </td>
         </tr>
       </tbody>
