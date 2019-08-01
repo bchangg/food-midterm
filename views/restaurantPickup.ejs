@@ -65,7 +65,7 @@
           <!-- BUTTON -->
           <td class='s'>
             <form action="/restaurants/pickup" method="POST">
-              <input type=hidden name=order_status value="Complete">
+              <input type=hidden name=order_status value="Completed">
               <input type=hidden class="current_status" name=current_status value="Ready">
               <input type=hidden name=order_id value="<%= orders[i].id  %>">
               <button type="submit" class="btn btn-success">Complete</button>
