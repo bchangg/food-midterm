@@ -19,18 +19,18 @@
   <% include partials/_header %>
   <h1>USER ORDER STATUS PAGE</h1>
   <div class="buttonsss">
-    <% console.log(status) %>
-    <form action="/users/<%=status[0].user_id%>" method="GET" style="display: inline;">
+    <% console.log(userId) %>
+    <form action="/users/<%=userId%>" method="GET" style="display: inline;">
       <button id="current" type="submit" class="btn btn-outline-success">Current Orders</button>
     </form>
-    <form action="/users/<%=status[0].user_id%>/history" method="GET" style="display: inline;">
+    <form action="/users/<%=userId%>/history" method="GET" style="display: inline;">
       <button id="history" type="submit" class="btn btn-outline-info">Order History</button>
     </form>
   </div>
 
   <div class="currentOrder">
     <% for (let i of status) { %>
-      <% if (i.order_status !== "Completed" || i.order_status !== "Cancelled") { %>
+      <% if (i.order_status !== "Completed" && i.order_status !== "Cancelled") { %>
         <div class=status>
             <% if (i.order_status === "Preparing") { %>
               <input type=hidden id="order<%= i.id %>" value="<%= i.id %>">
@@ -49,9 +49,15 @@
       <% } %>
     <% } %>
   </div>  <br>
+  <% if (status == "") {%>
+    <div class=status>
+      <span class="noOrders">You currently don't have any active orders.</span>
+    </div>
+  <% } %>
+
 
   <% for (let i of status) { %>
-  <% if (i.order_status !== "Completed" || i.order_status !== "Cancelled") { %>
+  <% if (i.order_status !== "Completed" && i.order_status !== "Cancelled") { %>
   <div class="currentOrderDetail">
     <% console.log(Date(i.created_at)) %>
     Current Order Detail (Order#:<%=i.id %> Date created: <%=new Date(i.created_at) %>)
