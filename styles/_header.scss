@@ -1,3 +1,12 @@
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
 .top-bar {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -21,7 +30,7 @@
     position: absolute;
     transition: all .3s ease-in-out;
     top: 71px;
-    z-index: -1;
+    z-index: -2;
     margin-left: -6px;
   }
 
@@ -32,6 +41,14 @@
     transition: all .3s ease-in-out;
   }
 
+  #circle {
+    height: 150px;
+    position: absolute;
+    z-index: 50;
+    transition: all 1s ease-in-out;
+    top: 0px;
+    left: 1.25rem;
+  }
 
   #navButtons {
     float: right;
@@ -44,3 +61,6 @@
 
 }
 
+.top-bar:hover #circle{
+  animation: rotation 7s infinite linear;
+}

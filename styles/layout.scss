@@ -2,7 +2,7 @@
 @import 'header';
 
 body {
-  background-color: #9ca19c;
+  background-color: white;
 
   #imgMain {
     background-image: url("/images/main.jpeg");
@@ -22,6 +22,7 @@ body {
     background-position: center;
     height: 30rem;
     margin-bottom: 1rem;
+    box-shadow: 0 -30px 30px 20px white inset;
 
     h1 {
       color: white;
