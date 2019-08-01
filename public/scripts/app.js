@@ -15,7 +15,6 @@ $(() => {
   }
 
   const createDishElement = function(dish) {
-    console.log(dish);
     return `
       <article class="d-flex flex-column m-2">
         <div class="description d-flex flex-row justify-content-between align-items-center">
@@ -25,8 +24,8 @@ $(() => {
           </div>
           <img class="img-fluid" src="${dish.imgurl}" alt="${dish.name}">
         </div>
-        <div class="quantity-and-price d-flex flex-row justify-content-between align-items-center">
-          <div>
+        <div class="quantity-and-price d-flex flex-row justify-content-between align-items-end">
+          <div class="quantity">
             <input type="number" value="1" min="0" max="100" step="1"/>
           </div>
           <div class="d-flex flex-column justify-content-start align-items-center">
@@ -103,8 +102,8 @@ $(() => {
     let itemTimeout;
     $allSelectDishButtons.click(function(event) {
       clearInterval(itemTimeout);
-      const itemName = $(this).parent().parent().parent().children('h2').text();
-      const itemQuantity = $(this).parent().parent().children('div').children('input');
+      const itemName = $(this).parent().parent().siblings('div.description').children('div.d-flex').children('h2').text();
+      const itemQuantity = $(this).parent().siblings('div.quantity').children('input');
       addItemToOrder(itemName, currentOrder, Number(itemQuantity.val()));
       let currentTotal = 0;
       for (let dish in currentOrder) {
