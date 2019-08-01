@@ -1,9 +1,9 @@
 <header>
   <nav class="top-bar">
-    <div class="half-circle-outside-wrap">
-        <div class="half-circle-inside-wrap"></div>
-    </div>
-    <img id="icon" src="/images/LightRestoTransp.png" href="/">
+    <div class="half-circle-outside-wrap"></div>
+    <a href="\">
+      <img id="icon" src="/images/LightRestoTransp.png" href="/">
+    </a>
         <% if (!user) { %>
         <form action="/login" method="post">
           <div id="navButtons">
@@ -21,7 +21,10 @@
           </div>
         </form>
         <% } else {%>
-        <span class="signedAs">Signed In as <%= user %></span>
+        <div id="navButtons">
+        <form class="form-inline">
+          <span>Signed In as <%= user %></button>
+        </form>
         <% if (user !== 'Restaurant') {%>
         <form class="form-inline" action="/users" method="post">
           <button class="btn btn-secondary" name="currentUsername" value="<%= user %>" type="submit">Order Status</button>
@@ -30,6 +33,7 @@
         <form class="form-inline" action="/logout" method="post">
           <button class="btn btn-secondary" type="submit">Log Out</button>
         </form>
+        </div>
         <% } %>
     </nav>
 </header>

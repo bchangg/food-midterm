@@ -9,36 +9,38 @@
   position: fixed;
   display: block;
   box-sizing: inherit;
-  opacity: 0.8;
-  background-color: rgb(250, 250, 250);
+  background-color: rgba(253,250,246,.65);
   z-index: 99;
 
   .half-circle-outside-wrap {
-    transition: all .3s ease-in-out;
-    height: 5.1375rem;
-    left: .525rem;
-    overflow: hidden;
+    background-color: rgba(253, 250, 246, 0.65);
+    height: 80px;
+    width: 160px;
+    border-bottom-left-radius: 160px;
+    border-bottom-right-radius: 160px;
     position: absolute;
-    top: 4.5rem;
-}
+    transition: all .3s ease-in-out;
+    top: 71px;
+    z-index: -1;
+    margin-left: -6px;
+  }
 
   #icon {
     height: 150px;
-    opacity: 1;
     float: left;
-    margin-left: 1em;
+    z-index: 50;
+    transition: all .3s ease-in-out;
   }
 
+
   #navButtons {
-    opacity: 1;
-    margin-left: 1em;
+    float: right;
+    position: relative;
   }
 
   form {
     display: inline;
   }
+
 }
 
-.top-bar .half-circle-outside-wrap .half-circle-inside-wrap {
-  background-color: rgba(253,250,246,.65);
-}
