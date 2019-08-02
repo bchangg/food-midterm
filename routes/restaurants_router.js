@@ -25,7 +25,7 @@ module.exports = (db, io) => {
       .then((orders) => {
         getItemsPerOrder(db)
           .then(items => {
-            res.render("restaurantHistOrders", { user: true, orders, items });
+            res.render("restaurantHistOrders", { user: 'Restaurant', orders, items });
           })
       })
       .catch(err => {
@@ -48,7 +48,7 @@ module.exports = (db, io) => {
   router.get('/pickup', (req, res) => {
     getReadyForPickup(db)
       .then((orders) => {
-        res.render("restaurantPickup", { user: true, orders });
+        res.render("restaurantPickup", { user: 'Restaurant', orders });
       })
       .catch(err => {
         console.log('error:', err);
