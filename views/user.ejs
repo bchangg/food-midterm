@@ -25,7 +25,6 @@
   </div>
 
   <div class="buttonsss">
-    <% console.log(userId) %>
     <form action="/users/<%=userId%>" class='formContainingPost' method="GET" style="display: inline;">
       <button id="current" type="submit" class="btn btn-outline-success">Current Orders</button>
     </form>
@@ -65,8 +64,7 @@
   <% for (let i of status) { %>
   <% if (i.order_status !== "Completed" && i.order_status !== "Cancelled") { %>
   <div class="currentOrderDetail">
-    <% console.log(Date(i.created_at)) %>
-    Current Order Detail (Order#:<%=i.id %> Date created: <%=new Date(i.created_at) %>)
+    Current Order Detail (Order#:<%=i.id %> Date created: <%=new Date(i.created_at).toDateString() %>)
     <table class="orderDetail">
       <thead>
         <th scope="col" id="tc">Name</th>
