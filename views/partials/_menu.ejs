@@ -1,3 +1,25 @@
 <section id="menu" class="d-flex mx-5 flex-column">
   <%# things will be inserted here when the page fetches all the menu items from the database %>
+  <div class="menu-title" style="border-bottom: dotted 1px grey">
+    <h2>Menu</h2>
+  </div>
 </section>
+
+<%# <article class="d-flex flex-column m-2">
+  <div class="description d-flex flex-row justify-content-between align-items-center">
+    <div class="d-flex flex-column">
+      <h2>${dish.name}</h2>
+      <p>${dish.description}</p>
+    </div>
+    <img class="img-fluid" src="${dish.imgurl}" alt="${dish.name}">
+  </div>
+  <div class="quantity-and-price d-flex flex-row justify-content-between align-items-end">
+    <div class="quantity">
+      <input type="number" value="1" min="0" max="100" step="1"/>
+    </div>
+    <div class="d-flex flex-column justify-content-start align-items-center">
+      <label for="select">$${dish.price / 100}</label>
+      <input class="select-dish btn btn-primary btn-sm" type="button" name="select" value="Add to Order">
+    </div>
+  </div>
+</article> %>

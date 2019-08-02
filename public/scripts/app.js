@@ -17,10 +17,15 @@ $(() => {
   const createDishElement = function(dish) {
     return `
       <article class="d-flex flex-column m-2">
-        <h2>${dish.name}</h2>
-        <p>${dish.description}</p>
-        <div class="quantity-and-price d-flex flex-row justify-content-between align-items-center">
-          <div>
+        <div class="description d-flex flex-row justify-content-between align-items-center">
+          <div class="d-flex flex-column">
+            <h2>${dish.name}</h2>
+            <p>${dish.description}</p>
+          </div>
+          <img class="img-fluid" src="${dish.imgurl}" alt="${dish.name}">
+        </div>
+        <div class="quantity-and-price d-flex flex-row justify-content-between align-items-end">
+          <div class="quantity">
             <input type="number" value="1" min="0" max="100" step="1"/>
           </div>
           <div class="d-flex flex-column justify-content-start align-items-center">
@@ -97,9 +102,9 @@ $(() => {
     let itemTimeout;
     $allSelectDishButtons.click(function(event) {
       clearInterval(itemTimeout);
-      const itemName = $(this).parent().parent().parent().children('h2').text();
-      const itemQuantity = Number($(this).parent().parent().children('div').children('input').val());
-      addItemToOrder(itemName, currentOrder, itemQuantity);
+      const itemName = $(this).parent().parent().siblings('div.description').children('div.d-flex').children('h2').text();
+      const itemQuantity = $(this).parent().siblings('div.quantity').children('input');
+      addItemToOrder(itemName, currentOrder, Number(itemQuantity.val()));
       let currentTotal = 0;
       for (let dish in currentOrder) {
         currentTotal += Number((currentOrder[dish].price * currentOrder[dish].quantity));
@@ -109,6 +114,7 @@ $(() => {
       itemTimeout = setTimeout(() => {
         $orderSlider.children('.order-item').remove();
       }, 1500);
+      $(itemQuantity[0]).val('1');
     });
   }
 
@@ -129,6 +135,7 @@ $(() => {
       }
       $('#final-price').text(`$${currentTotal/100}`);
     })
+    $("input[name='decidingQuantity']").inputSpinner(); // setting plugin for the quantity input thing
     $('#final-price').text($('#order-total').text());
   }
 
