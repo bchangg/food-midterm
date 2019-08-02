@@ -3,6 +3,7 @@
 
 <head>
   <title>User Page</title>
+  <link rel="shortcut icon" href="/images/icon/tiny.png" type="image/x-icon" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -14,11 +15,15 @@
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app_users_timer.js"></script>
   <script type="text/javascript" src="/scripts/restaurant_events.js"></script>
+  <script type="text/javascript" src="/scripts/animation.js"></script>
 </head>
 
 <body>
   <% include partials/_header %>
-  <h1>USER ORDER STATUS PAGE</h1>
+  <div id="imgUser" class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center pl-5 my-0">
+    <h1>OrderStatus</h1>
+  </div>
+
   <div class="buttonsss">
     <% console.log(userId) %>
     <form action="/users/<%=userId%>" class='formContainingPost' method="GET" style="display: inline;">

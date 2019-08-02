@@ -1,18 +1,15 @@
 <header>
-  <nav class="navbar navbar-expand-md navbar-dark bg-success">
-    <a class="navbar-brand" href="/">LightResto</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="d-flex flex-row align-items-center">
+  <nav class="top-bar">
+    <div class="half-circle-outside-wrap"></div>
+    <a href="\">
+      <img id="icon" src="/images/icon/LightRestoTransp-main.png" href="/">
+      <img id="circle" src="/images/icon/LightRestoTransp-circle.png" href="/">
+    </a>
         <% if (!user) { %>
-        <form class="form-inline" action="/login" method="post">
-          <div class="btn-group" role="group">
+        <form action="/login" method="post">
+          <div id="navButtons">
             <div class="btn-group" role="group" aria-label="Users's drop down selection">
-              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Select User
               </button>
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -21,22 +18,24 @@
                 <input class="dropdown-item" type="submit" name="user" value="Frodo">
               </div>
             </div>
-            <button class="btn btn-primary" type="submit" name="user" value="Restaurant">Restaurant</button>
+            <button class="btn btn-secondary" type="submit" name="user" value="Restaurant">Restaurant</button>
           </div>
         </form>
         <% } else {%>
-        <span>Signed In as <%= user %></span>
+        <div id="navButtons">
+        <form class="form-inline">
+          <span>Signed In as <%= user %></button>
+        </form>
         <% if (user !== 'Restaurant') {%>
         <form class="form-inline" action="/users" method="post">
-          <button class="btn btn-primary" name="currentUsername" value="<%= user %>" type="submit">Order Status</button>
+          <button class="btn btn-secondary" name="currentUsername" value="<%= user %>" type="submit">Order Status</button>
         </form>
         <% } %>
         <form class="form-inline" action="/logout" method="post">
-          <button class="btn btn-primary" type="submit">Log Out</button>
+          <button class="btn btn-secondary" type="submit">Log Out</button>
         </form>
+        </div>
         <% } %>
-      </div>
-    </div>
-  </nav>
+    </nav>
 </header>
 <script src="/socket.io/socket.io.js"></script>

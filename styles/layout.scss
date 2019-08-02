@@ -1,19 +1,33 @@
 // See: https://sass-lang.com/
+@import 'header';
 
 body {
-  background-color: #9ca19c;
+  background-color: white;
 
-  .jumbotron {
-    background-image: url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+  #imgMain {
+    background-image: url("/images/background/main.jpeg");
+  }
+
+  #imgUser {
+    background-image: url("/images/background/user.jpg");
+  }
+
+  #imgRestaurant {
+    background-image: url("/images/background/restuarant.jpeg");
+  }
+
+  #imgMain, #imgUser, #imgRestaurant {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 30rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 -30px 30px 20px white inset;
 
     h1 {
       color: white;
-      font-size: 10rem;
-      width: 30vw;
+      font-size: 7rem;
+      width: 40vw;
     }
   }
 
@@ -22,6 +36,7 @@ body {
     width: 70vw;
     margin: 1rem auto 3rem;
     padding: 0 auto;
+
     @import 'menu';
     @import 'orderSlider';
   }

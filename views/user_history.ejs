@@ -4,6 +4,7 @@
 <head>
   <title>User Hisotry Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="/images/icon/tiny.png" type="image/x-icon" />
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
@@ -11,12 +12,17 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/animation.js"></script>
+
 
 </head>
 
 <body>
   <% include partials/_header %>
-  <h1>USER ORDER HISTORY</h1>
+  <div id="imgUser" class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center pl-5 my-0">
+    <h1>OrderHistory</h1>
+  </div>
+
   <div class="buttonsss">
     <form action="/users/<%=userId%>" method="GET" style="display: inline;">
       <button id="current" type="submit" class="btn btn-outline-success">Current Orders</button>

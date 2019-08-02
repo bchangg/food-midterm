@@ -1,0 +1,66 @@
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.top-bar {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  width: 100%;
+  float: none;
+  height: 4.4125rem;
+  line-height: 4.4125rem;
+  overflow: visible;
+  position: fixed;
+  display: block;
+  box-sizing: inherit;
+  background-color: rgba(253,250,246,.65);
+  z-index: 99;
+
+  .half-circle-outside-wrap {
+    background-color: rgba(253, 250, 246, 0.65);
+    height: 80px;
+    width: 160px;
+    border-bottom-left-radius: 160px;
+    border-bottom-right-radius: 160px;
+    position: absolute;
+    transition: all .3s ease-in-out;
+    top: 71px;
+    z-index: -2;
+    margin-left: -6px;
+  }
+
+  #icon {
+    height: 150px;
+    float: left;
+    z-index: 50;
+    transition: all .3s ease-in-out;
+  }
+
+  #circle {
+    height: 150px;
+    position: absolute;
+    z-index: 50;
+    transition: all 1s ease-in-out;
+    top: 0px;
+    left: 1.25rem;
+  }
+
+  #navButtons {
+    float: right;
+    position: relative;
+  }
+
+  form {
+    display: inline;
+  }
+
+}
+
+.top-bar:hover #circle{
+  animation: rotation 7s infinite linear;
+}
