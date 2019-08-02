@@ -56,7 +56,7 @@
           <!-- Date -->
           <td class='s statusContainer'>
             <div class='statusDiv'>
-              <%= orders[i].date %>
+              <%= orders[i].date.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }) %>
             </div>
           </td>
           <!-- Status -->
