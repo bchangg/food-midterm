@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { updateOrdersTableWIthTotalPriceTotalDuration, seedOrdersDetailsTableWithCurrentOrderReturningOrderId, seedOrdersTableWithUserIdReturningOrderId, getUserIdFromName, getNameFromUserId, getOrdersPerUser, getItemsPerUser } = require('../query/userQueries');
+const { updateOrdersTableWIthTotalPriceTotalDuration, seedOrdersDetailsTableWithCurrentOrderReturningOrderId, seedOrdersTableWithUserIdReturningOrderId, getUserIdFromName, getNameFromUserId, getOrdersPerUser, getItemsPerUser, getIdCreateAtSumDuration, getIdandOrderStatus, cancellingStatusByOrderId} = require('../query/userQueries');
 
 module.exports = (db, io) => {
   router.post('/', (request, response) => {
@@ -54,12 +54,8 @@ module.exports = (db, io) => {
 
   //coundown timer
   router.get("/", (request, response) => {
-    db.query(`
-      SELECT order_id, orders.created_at, sum(order_duration)
-      FROM orders_details JOIN orders ON orders.id = order_id
-      GROUP BY order_id, orders.created_at;
-    `).then(data => {
-      response.json(data.rows)
+    getIdCreateAtSumDuration(db).then(data => {
+      response.json(data)
     }).catch((error) => {
       response.status(500).json({ error: error })
     })
@@ -70,7 +66,6 @@ module.exports = (db, io) => {
     const userId = request.params.id;
     getNameFromUserId(db, userId)
       .then(user => {
-        console.log(`user user user user user`, user)
         if (user) {
           getOrdersPerUser(db, userId)
             .then(orders => {
@@ -111,22 +106,12 @@ module.exports = (db, io) => {
   router.post("/cancel", (request, response) => {
     const orderId = request.body.order_id;
     const user = request.body.user_id;
-
-    db.query(`
-        SELECT id, order_status, user_id
-        FROM orders
-        WHERE id = ${orderId}
-      `)
+    getIdandOrderStatus(db, orderId)
       .then(data => {
-        if (data.rows[0].order_status !== 'Pending') {
+        if (data.order_status !== 'Pending') {
           return response.redirect(`/users/${user}`)
         }
-        db.query(`
-              UPDATE orders
-              SET order_status = 'Cancelling'
-              WHERE id = ${orderId}
-              RETURNING *;
-            `)
+        cancellingStatusByOrderId(db, orderId)
           .then(data => {
             io.emit('updateStatusFieldAfterCancel', { for: 'everyone' });
             response.redirect(`/users/${user}`)

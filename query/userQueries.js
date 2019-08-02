@@ -44,6 +44,25 @@ const updateOrdersTableWIthTotalPriceTotalDurationQuery = `
   WHERE id = $1;
 `;
 
+const getIdCreateAtSumDurationQuery = `
+  SELECT order_id, orders.created_at, sum(order_duration)
+  FROM orders_details JOIN orders ON orders.id = order_id
+  GROUP BY order_id, orders.created_at;
+`
+
+const cancellingStatusByOrderIdQuery = `
+  UPDATE orders
+  SET order_status = 'Cancelling'
+  WHERE id = $1
+  RETURNING *;
+`
+
+const getIdandOrderStatusQuery = `
+  SELECT id, order_status, user_id
+  FROM orders
+  WHERE id = $1
+`
+
 function updateOrdersTableWIthTotalPriceTotalDuration(db, orderId) {
   return db.query(updateOrdersTableWIthTotalPriceTotalDurationQuery, [orderId]);
 }
@@ -88,6 +107,22 @@ function getItemsPerUser(db, userId) {
     })
 };
 
+function getIdCreateAtSumDuration(db) {
+  return db.query(getIdCreateAtSumDurationQuery).then(durationFromQuery => {
+    return durationFromQuery.rows;
+  })
+};
+
+function getIdandOrderStatus(db, orderId) {
+  return db.query(getIdandOrderStatusQuery, [orderId]).then(data => {
+    return data.rows[0];
+  })
+}
+
+function cancellingStatusByOrderId(db, orderId) {
+  return db.query(cancellingStatusByOrderIdQuery, [orderId])
+}
+
 module.exports = {
   updateOrdersTableWIthTotalPriceTotalDuration,
   seedOrdersDetailsTableWithCurrentOrderReturningOrderId,
@@ -95,5 +130,8 @@ module.exports = {
   getUserIdFromName,
   getNameFromUserId,
   getOrdersPerUser,
-  getItemsPerUser
+  getItemsPerUser,
+  getIdCreateAtSumDuration,
+  getIdandOrderStatus,
+  cancellingStatusByOrderId
 }
