@@ -14,6 +14,7 @@ div.order-details-container {
   }
 
   .order-details {
+    text-align: center;
     position: relative;
     border: 0 solid;
     border-radius: 3rem;
@@ -21,7 +22,7 @@ div.order-details-container {
     max-height: 80vh;
     background-color: rgba(253, 250, 246, 0.77);
     padding: 2rem;
-
+    // width: 80vw;
     &::-webkit-scrollbar {
       width: 0 !important;
     }
@@ -41,6 +42,7 @@ div.order-details-container {
 
       > span {
         max-width: 40vw;
+        font-size: 1.5rem;
       }
 
       .details {
