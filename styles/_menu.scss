@@ -1,20 +1,26 @@
 #menu {
   width: 50vw;
-  background-color: #fff;
+  background-color: rgba(137, 214, 238, 0.44);
+  border-radius: 5rem;
+  padding: 2rem;
 
   article {
-    border: 1px solid black;
+    border-radius: 2rem;
     padding: 1rem;
+    background-color: #Fff;
 
-    > p {
-      margin-left: 2rem;
+    &:hover {
+      box-shadow: 0.5px 0.5px 5px black;
+      background-color: rgba(221, 221, 221, 0.34);
     }
 
-    .quantity-and-price {
-      margin: auto 6rem;
-      @media all and (max-width: 1024px) {
-        margin: auto 0;
+    .description {
+      img {
+        max-height: 5.5rem;
+        border-radius: 2rem;
       }
     }
+
+    .quantity-and-price {}
   }
 }
