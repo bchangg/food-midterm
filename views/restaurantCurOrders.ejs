@@ -17,7 +17,7 @@
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
-  <script type="text/javascript" src="/scripts/polling.js"></script>
+  <script type="text/javascript" src="/scripts/user_events.js"></script>
 
 </head>
 
@@ -30,7 +30,7 @@
   <section class='container'>
 
     <table class='order'>
-      <thead>
+      <thead class='ordersHead'>
         <tr>
           <th scope="col">Order</th>
           <th scope="col">Details</th>
@@ -40,8 +40,8 @@
         </tr>
       </thead>
       <% for(let i = 0; i < orders.length; i++) { %>
-      <tbody>
-        <tr>
+      <tbody class='ordersBody'>
+        <tr class='orders'>
           <!-- ORDER -->
           <th scope="row"><%=orders[i].order_id%></th>
           <!-- DISHES -->

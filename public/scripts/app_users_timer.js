@@ -11,7 +11,6 @@ $(() => {
 
     }
   })
-
 });
 
 const timeClock = function(id, createdTime, expiredTime) {
@@ -20,18 +19,18 @@ const timeClock = function(id, createdTime, expiredTime) {
   // Update the count down every 1 second
 
   let x = setInterval(() => {
-      let now = new Date().getTime();
-      // Find the distance between now and the count down date
-      let countDown = realexpire - now;
-      let hours = Math.floor((countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      let minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
-      let seconds = Math.floor((countDown % (1000 * 60)) / 1000);
+    let now = new Date().getTime();
+    // Find the distance between now and the count down date
+    let countDown = realexpire - now;
+    let hours = Math.floor((countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((countDown % (1000 * 60)) / 1000);
 
-      $(`.countDown${id}`).html(`${hours}h ${minutes}m ${seconds}s `)
+    $(`.countDown${id}`).html(`${hours}h ${minutes}m ${seconds}s `)
 
-      if (countDown < 0) {
-        clearInterval(x);
-        $(`.countDown${id}`).html("EXPIRED");
-      }
-    }, 1000);
+    if (countDown < 0) {
+      clearInterval(x);
+      $(`.countDown${id}`).html("EXPIRED");
+    }
+  }, 1000);
 }

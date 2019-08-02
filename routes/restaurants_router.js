@@ -3,7 +3,7 @@ const router = express.Router();
 const { sendMessage } = require('../twilio/send_sms');
 const { getPendingAndInProgressOrders, getItemsPerOrder, updateOrderStatus, checkDb, getCompletedAndCancelledOrders, getReadyForPickup } = require('../query/restaurantQueries');
 
-module.exports = (db) => {
+module.exports = (db, io) => {
   router.get("/", (req, res) => {
     getPendingAndInProgressOrders(db)
       .then((orders) => {
@@ -45,9 +45,6 @@ module.exports = (db) => {
         response.redirect('/restaurants/pickup');
       });
   });
-
-
-
   router.get('/pickup', (req, res) => {
     getReadyForPickup(db)
       .then((orders) => {
@@ -66,6 +63,7 @@ module.exports = (db) => {
         if (data) {
           updateOrderStatus(db, request)
             .then(() => {
+              io.emit('restaurantHasAcknowledgeOrder', { for: 'everyone' });
               response.redirect("/restaurants/pickup")
             })
             .catch(err => {
@@ -74,6 +72,7 @@ module.exports = (db) => {
                 .json({ error: err.message });
             });
         } else {
+          io.emit('restaurantHasAcknowledgeOrder', { for: 'everyone' });
           response.redirect("/restaurants/pickup");
         }
       })
@@ -85,6 +84,8 @@ module.exports = (db) => {
         if (data) {
           updateOrderStatus(db, request)
             .then(() => {
+              console.log('restaurantHasAcknowledgeOrder');
+              io.emit('restaurantHasAcknowledgeOrder', { for: 'everyone' });
               response.redirect("/restaurants")
             })
             .catch(err => {
