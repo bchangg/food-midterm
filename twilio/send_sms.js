@@ -1,5 +1,7 @@
-const accountSid = 'ACabd0e8c237fdbc51447f3b5e045ed50f';
-const authToken = '519bbf4b865fe2c75742cd8cfe011760';
+const accountSid = process.env.TWILIO_ACCOUNTSID;
+const authToken = process.env.TWILIO_AUTHTOKEN;
+const fromPhone = process.env.TWILIO_NUMBER;
+
 const client = require('twilio')(accountSid, authToken);
 
 function sendMessage(messageData) {
@@ -7,7 +9,7 @@ function sendMessage(messageData) {
     body: `Hi ${messageData.body.userName},
     Thanks for ordering with LightResto.
     Your food is ready for pickup`,
-    from: '+16043306848',
+    from: fromPhone,
     to: `+1${messageData.body.sendText}`
   })
 }
