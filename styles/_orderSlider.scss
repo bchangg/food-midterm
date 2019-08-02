@@ -1,22 +1,28 @@
 .order-slider {
-  background-color: #FFF;
+  background-color: rgba(137, 214, 238, 0.44);
   position: fixed;
   bottom: 8vh;
-  right: 17vw;
+  right: 7vw;
   padding: 1rem;
   max-height: 25vh;
+  width: 18vw;
   overflow-y: auto;
-  @media all and (max-width: 1024px) {
-    right: 5vw;
-  }
+  border-radius: 1rem;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
 
+  &::-webkit-scrollbar {
+    width: 0 !important;
+  }
+  // @media all and (max-width: 1024px) {
+  //   right: 5vw;
+  // }
   .order-items {
     border: 1px solid black;
     padding: 0.2rem;
     margin: 0.1rem;
     width: 100%;
   }
-
-  input#checkout {
-  }
+  // input#checkout {
+  // }
 }

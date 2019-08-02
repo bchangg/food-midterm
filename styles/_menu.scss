@@ -1,6 +1,6 @@
 #menu {
   width: 50vw;
-  background-color: rgba(137, 214, 238, 0.44);
+  // background-color: white;
   border-radius: 5rem;
   padding: 2rem;
 
@@ -21,6 +21,15 @@
       }
     }
 
-    .quantity-and-price {}
+    .quantity-and-price {
+      .quantity {
+        .input-group {
+          input {
+            max-width: 100%;
+            width: 5vw;
+          }
+        }
+      }
+    }
   }
 }
