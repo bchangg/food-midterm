@@ -2,18 +2,18 @@
 @import 'header';
 
 body {
-  background-color: #9ca19c;
+  background-color: white;
 
   #imgMain {
-    background-image: url("/images/main.jpeg");
+    background-image: url("/images/background/main.jpeg");
   }
 
   #imgUser {
-    background-image: url("/images/user.jpg");
+    background-image: url("/images/background/user.jpg");
   }
 
   #imgRestaurant {
-    background-image: url("/images/restuarant.jpeg");
+    background-image: url("/images/background/restuarant.jpeg");
   }
 
   #imgMain, #imgUser, #imgRestaurant {
@@ -22,6 +22,7 @@ body {
     background-position: center;
     height: 30rem;
     margin-bottom: 1rem;
+    box-shadow: 0 -30px 30px 20px white inset;
 
     h1 {
       color: white;
