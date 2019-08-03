@@ -14,11 +14,15 @@ Due to a time constraint of 7 days, our team decided to prioritize functionality
 - [ssspiderzzz](https://github.com/ssspiderzzz)
 - [bchangg](https://github.com/bchangg)
 
-## Features
+## Notable Features
 
 - Live updates rendered to page when a user places an order. This way the restaurant will never have to refresh their page to get the latest orders, but will rather have them be displayed live as orders come in
 
   - This feature was implemented by @mrogers using websockets
+
+- Spinning wheel on the top right on scroll
+
+  - Implemented by @ssspiderzzz with his Photoshop and front end abilities
 
 - ### Improvements
 
@@ -59,3 +63,9 @@ Go to `localhost:8080` in your web browser to see the page
 ![User's Order Page](/docs/user_order_status.png)
 
 ![Restaurant Orders Page](/docs/restaurant_order_status.png)
+
+### Summary
+
+Documentation written by @bchangg
+
+Please contact any members of the [team](##Team) if you have any questions.
