@@ -22,7 +22,7 @@ Due to a time constraint of 7 days, our team decided to prioritize functionality
 
   - This feature was implemented by [renemroger](https://github.com/renemroger) using websockets
 
-- Spinning wheel on the top right on scroll
+- Spinning wheel on the top left on scroll
 
   - Implemented by [ssspiderzzz](https://github.com/ssspiderzzz) with his Photoshop and front end abilities
 
