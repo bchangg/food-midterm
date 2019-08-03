@@ -1,6 +1,6 @@
 # LHL LightResto Project
 
-## Project Description
+## Description
 
 This is a project chosen from a list of ideas given to students at lighthouse labs for their midterm project.
 
