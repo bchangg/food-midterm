@@ -1,6 +1,6 @@
 #menu {
   width: 50vw;
-  background-color: rgba(137, 214, 238, 0.44);
+  // background-color: white;
   border-radius: 5rem;
   padding: 2rem;
 
@@ -8,7 +8,7 @@
     border-radius: 2rem;
     padding: 1rem;
     background-color: #Fff;
-    transition: all .5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 
     &:hover {
       box-shadow: 0.5px 0.5px 5px black;
@@ -22,6 +22,15 @@
       }
     }
 
-    .quantity-and-price {}
+    .quantity-and-price {
+      .quantity {
+        .input-group {
+          input {
+            max-width: 100%;
+            width: 5vw;
+          }
+        }
+      }
+    }
   }
 }

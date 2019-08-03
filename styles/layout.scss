@@ -3,8 +3,7 @@
 
 body {
   // background-color: rgba(145, 145, 145, 0.78);
-  // background-image: linear-gradient(to bottom, rgb(189, 189, 189), black);
-
+  // background-image: linear-gradient(white, white, rgba(137, 214, 238, 0.44), rgba(137, 214, 238, 0.44), rgba(137, 214, 238, 0.70));
   #imgMain {
     background-image: url("/images/background/main.jpeg");
   }
@@ -17,7 +16,9 @@ body {
     background-image: url("/images/background/restuarant.jpeg");
   }
 
-  #imgMain, #imgUser, #imgRestaurant {
+  #imgMain,
+  #imgRestaurant,
+  #imgUser {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -33,9 +34,10 @@ body {
   }
 
   main {
-    width: 70vw;
-    margin: 1rem auto;
-
+    margin: 0 auto;
+    // background-color: #000000;
+    border-radius: 0;
+    background-image: linear-gradient(white, rgba(137, 214, 238, 0.44), rgba(137, 214, 238, 0.44), rgba(137, 214, 238, 0.70));
     @import 'menu';
     @import 'orderSlider';
   }
