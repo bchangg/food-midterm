@@ -68,4 +68,4 @@ Go to `localhost:8080` in your web browser to see the page
 
 Documentation written by @bchangg
 
-Please contact any members of the [team](##Team) if you have any questions.
+Please contact any members of the [team](#Team) if you have any questions.
