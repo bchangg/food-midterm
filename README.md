@@ -1,4 +1,6 @@
-# LHL LightResto Project
+# LightResto
+
+A **Lighthouse Labs** project
 
 ## Description
 
