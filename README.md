@@ -48,4 +48,10 @@ Run `npm run local` to get the server up and running
 
 ## Screenshots
 
-![Home Page]() ![User's Order Page]() ![Restaurant Orders Page]()
+![Home Page](/docs/menu_page.png)
+
+![Placing an Order](/docs/placing_order.png)
+
+![User's Order Page](/docs/user_order_status.png)
+
+![Restaurant Orders Page](/docs/restaurant_order_status.png)
