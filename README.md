@@ -18,11 +18,11 @@ Due to a time constraint of 7 days, our team decided to prioritize functionality
 
 - Live updates rendered to page when a user places an order. This way the restaurant will never have to refresh their page to get the latest orders, but will rather have them be displayed live as orders come in
 
-  - This feature was implemented by @mrogers using websockets
+  - This feature was implemented by [renemroger](https://github.com/renemroger) using websockets
 
 - Spinning wheel on the top right on scroll
 
-  - Implemented by @ssspiderzzz with his Photoshop and front end abilities
+  - Implemented by [ssspiderzzz](https://github.com/ssspiderzzz) with his Photoshop and front end abilities
 
 - ### Improvements
 
@@ -66,6 +66,6 @@ Go to `localhost:8080` in your web browser to see the page
 
 ### Summary
 
-Documentation written by @bchangg
+Documentation written by [bchangg](https://github.com/bchangg)
 
 Please contact any members of the [team](#Team) if you have any questions.
