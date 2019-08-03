@@ -26,11 +26,15 @@ Due to a time constraint of 7 days, our team decided to prioritize functionality
   - CSS and design can be improved upon
   - Multi-restaurant support can be added (the database should be robust enough to scale nicely)
 
-## Dependencies
+## Setup
 
 Please run `npm i` to install all dependencies
 
 Run `npm run local` to get the server up and running
+
+Go to `localhost:8080` in your web browser to see the page
+
+### Dependencies
 
 - body-parser
 - chalk
